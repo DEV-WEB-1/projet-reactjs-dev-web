@@ -5,9 +5,29 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(90deg, #24293e 0%, #24293e 20%, #24293e 80%, #24293e 100%);
+  overflow: hidden; /* Prevent scroll if not needed */
+  padding-left: 20vw;
+  padding-right: 20vw;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    padding-left: 5vw;
+    padding-right: 5vw;
+  }
+  
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
 }
