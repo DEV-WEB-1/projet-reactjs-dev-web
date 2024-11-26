@@ -1,0 +1,130 @@
+/* Main header styling */
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+/* Logo styling */
+.logo {
+    display: flex;
+    align-items: center;  /* Ensures logo is centered vertically */
+    padding: 10px 0;
+}
+
+/* Logo text styling */
+.logo .logo-text {
+    font-size: 30px;
+    font-weight: bold;
+    color: #f4f5fc;
+    margin-bottom: 0;
+    line-height: 1;  /* Ensures text is vertically centered */
+}
+
+/* Icons container styling */
+.icons {
+    display: flex;
+    gap: 18px;
+    padding: 10px 0;
+    align-items: center;
+}
+
+/* Icon images styling */
+.icons img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    flex-grow: 0;
+    transition: transform 0.3s ease-in-out;
+}
+
+.icons img:hover {
+    transform: scale(1.1);
+}
+
+/* Dropdown container */
+.homes {
+    position: relative; /* Ensure the dropdown is positioned relative to this container */
+}
+
+/* Dropdown menu styling */
+.dropdown-home {
+    position: absolute; /* Positioned relative to .homes */
+    top: 100%; /* Position directly below the icon */
+    right: 0; /* Align the top-right corner with the button */
+    margin-top: 5px;
+    transform: translateY(0) scale(0); /* Initially hidden */
+    transform-origin: top right; /* Growth starts from the top-right corner */
+    background-color: #3a415a;
+    border-radius: 10px; /* Optional: Rounded corners */
+    padding: 10px;
+    z-index: 1;
+    min-width: 150px; /* Optional: Ensure consistent width */
+    opacity: 0; /* Start with no visibility */
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
+}
+
+/* Show dropdown */
+.homes .dropdown-home.show {
+    transform: translateY(0) scale(1); /* Fully visible */
+    opacity: 1;
+}
+
+/* Dropdown menu item styling */
+.dropdown-home p {
+    margin: 0;
+    padding: 5px 10px;
+    cursor: pointer;
+    color: white;
+}
+
+.notifications {
+    position: relative; /* Ensure the dropdown is positioned relative to this container */
+}
+
+/* Dropdown menu styling */
+.dropdown-notifications {
+    position: absolute; /* Positioned relative to .homes */
+    top: 100%; /* Position directly below the icon */
+    right: 0; /* Align the top-right corner with the button */
+    margin-top: 5px;
+    transform: translateY(0) scale(0); /* Initially hidden */
+    transform-origin: top right; /* Growth starts from the top-right corner */
+    background-color: #3a415a;
+    border-radius: 10px; /* Optional: Rounded corners */
+    padding: 10px;
+    z-index: 1;
+    min-width: 150px; /* Optional: Ensure consistent width */
+    opacity: 0; /* Start with no visibility */
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
+}
+
+/* Show dropdown */
+.notifications .dropdown-notifications.show {
+    transform: translateY(0) scale(1); /* Fully visible */
+    opacity: 1;
+}
+
+/* Dropdown menu item styling */
+.dropdown-notifications p {
+    margin: 0;
+    padding: 5px 10px;
+    cursor: pointer;
+    color: white;
+}
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 768px) {
+    .logo .logo-text {
+        font-size: 20px;
+    }
+
+    .icons {
+        gap: 10px;
+    }
+    
+    .icons img {
+        width: 30px;
+        height: 30px;
+    }
+}

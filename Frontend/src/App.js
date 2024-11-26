@@ -8,14 +8,12 @@ import Home from './home/home';
 function App() {
   return (
     <Router>
-    <div className="container mt-5">
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/home" element={<Home />} />
       </Routes>
-    </div>
   </Router>
   );
 }
