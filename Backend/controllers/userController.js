@@ -66,3 +66,37 @@ exports.updatePassword = async (req, res) => {
     res.status(500).json({ message: "Erreur lors de la mise à jour du mot de passe." });
   }
 };
+exports.getUserHouses = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) return res.status(400).json({ message: "Email requis." });
+
+    const houses = await userService.getUserHouses(email);
+
+    res.status(200).json(houses);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.updateUser = async (req, res) => {
+  try {
+    const { email } = req.body; // L'email est utilisé pour trouver l'utilisateur
+    const updatedData = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: "L'email est requis pour la mise à jour." });
+    }
+
+    const updatedUser = await userService.updateUser(email, updatedData);
+    if (!updatedUser) {
+      return res.status(404).json({ message: "Utilisateur non trouvé." });
+    }
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ message: "Erreur lors de la mise à jour de l'utilisateur.", error });
+  }
+};
+

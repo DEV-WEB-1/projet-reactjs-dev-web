@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const House=require("../models/houseModel");
 
 // Service pour récupérer tous les utilisateurs
 exports.getAllUsers = async () => {
@@ -49,4 +50,27 @@ exports.updateUserPassword = async (email, newPassword) => {
   }
 };
 
+exports.getUserHouses = async (email) => {
+  // Récupérer l'utilisateur par email
+  const user = await User.findOne({ email });
+  if (!user) throw new Error("Utilisateur non trouvé.");
 
+  // Récupérer les maisons où l'utilisateur est admin
+  const adminHouses = await House.find({ _id: { $in: user.admin } }, "_id name");
+
+  // Récupérer les maisons où l'utilisateur est invité
+  const invitedHouses = await House.find({ _id: { $in: user.invited } }, "_id name");
+
+  return {
+    adminHouses: adminHouses.map((house) => ({ id: house._id, nom: house.name })),
+    invitedHouses: invitedHouses.map((house) => ({ id: house._id, nom: house.name })),
+  };
+};
+
+exports.updateUser = async (email, updatedUserData) => {
+  // Assurez-vous que l'email n'est pas modifiable
+  delete updatedUserData.email;
+
+  // Met à jour l'utilisateur correspondant à l'email
+  return await User.findOneAndUpdate({ email }, updatedUserData, { new: true });
+};

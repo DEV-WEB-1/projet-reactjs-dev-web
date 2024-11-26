@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
   admin: { type: [String], default: [] }, // Par défaut une liste vide
   invited: { type: [String], default: [] }, // Par défaut une liste vide
 },
-{ versionKey: false }
+{ versionKey: false },{ _id: false }
 );
 
 

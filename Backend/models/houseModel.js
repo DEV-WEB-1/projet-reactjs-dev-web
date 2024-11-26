@@ -1,27 +1,22 @@
 const mongoose = require("mongoose");
 
 const deviceSchema = new mongoose.Schema({
-  _id: String,
-  name: String,
-  type: String, // light, thermostat, etc.
-  status: String, // on, off, etc.
-  room_id: String,
-  settings: mongoose.Schema.Types.Mixed, // Champs dynamiques comme brightness
-});
+  name: { type: String, required: true },
+  type: { type: String, required: true }, // e.g., "router", "camera", etc.
+  status: { type: String, default: "off" }, // e.g., "on", "off", "active"
+  "room-name": { type: String, required: true },
+  settings: { type: Object, default: {} }, // Dynamic object for settings
+}, { _id: false });
 
 const roomSchema = new mongoose.Schema({
-  _id: String,
-  name: String,
-  type: String, // living_room, bedroom, etc.
-  devices: [deviceSchema],
-});
+  name: { type: String, required: true },
+  type: { type: String, required: true }, // e.g., "general", "kitchen", etc.
+  devices: { type: [deviceSchema], default: [] },
+}, { _id: false });
 
 const houseSchema = new mongoose.Schema({
-  _id: String,
-  name: String,
-  rooms: [roomSchema], 
-},
-{ versionKey: false }
-);
+  name: { type: String, required: true },
+  rooms: { type: [roomSchema], default: [] },
+},{ versionKey: false });
 
-module.exports = mongoose.model("House", houseSchema);
+module.exports = mongoose.model("House", houseSchema,"houses");
