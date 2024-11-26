@@ -2,7 +2,7 @@
 header {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
+    margin: 10px 10px;
 }
 
 /* Logo styling */
@@ -14,7 +14,7 @@ header {
 
 /* Logo text styling */
 .logo .logo-text {
-    font-size: 30px;
+    font-size: 24px;
     font-weight: bold;
     color: #f4f5fc;
     margin-bottom: 0;

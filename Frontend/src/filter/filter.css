@@ -1,0 +1,64 @@
+/* Main filter wrapper styling */
+.filter-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+/* Main filter container styling */
+.filter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background-color: #3a415a;
+    border-radius: 20px;
+}
+
+/* Individual filter content styling */
+.filter-content {
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    padding: 10px; /* Added padding to create space around the icon */
+    border-radius: 20px; /* Added border-radius for a better visual */
+}
+
+/* Image styling within filter content */
+.filter-content svg {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease, fill 0.3s ease;
+}
+
+.filter-content svg * {
+    fill: #8ebbff;
+}
+
+.filter-content:hover svg {
+    transform: scale(1.1); /* Added hover effect for all images */
+}
+
+/* Selected state styling */
+.filter-content.selected {
+    background-color: #8ebbff; /* Background color for selected icon */
+    border-radius: 20px; /* Added border-radius for a better visual */
+}
+
+.filter-content.selected svg * {
+    fill: #3a415a; /* Change fill color for selected SVG elements */
+}
+
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 768px) {
+    .filter {
+        gap: 10px;
+    }
+
+    .filter-content img {
+        width: 30px;
+        height: 30px;
+    }
+}

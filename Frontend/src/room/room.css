@@ -1,0 +1,7 @@
+.room {
+    background-color: #3a415a; /* Dark background */
+    border-radius: 20px;
+    width: 200px;
+    height: 250px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.473);
+}
