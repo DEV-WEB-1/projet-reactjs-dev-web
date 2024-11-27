@@ -1,23 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './rooms.css';
-import Card from '../room/room';
+import Room from '../room/room';
 
-function CardList() {
+function Rooms({ rooms, selectedFilter }) {
     const cardListRef = useRef(null);
     const [isScrollable, setIsScrollable] = useState(false);
-    const rooomImages = {
-        'Living Room': './image/living room.png',
-        'Bedroom': './image/bedroom.jpg',
-        'Kitchen': './image/kitchen.jpg',
-        'Bathroom': './image/bathroom.jpg',
-        'Garage': './image/garage.jpeg',
-        'Garden': './image/garden.jpg',
-    }
-    const rooms = Array.from({ length: 6 }, (_, index) => ({
-        title: `Kitchen ${index + 1}`,
-        image_url: rooomImages['Garage'] // Add the image URL here
-    }));
-      
+    const roomImages = {
+        'livingroom': './image/living room.png',
+        'bedroom': './image/bedroom.jpg',
+        'kitchen': './image/kitchen.jpg',
+        'bathroom': './image/bathroom.jpg',
+        'garage': './image/garage.jpeg',
+        'garden': './image/garden.jpg',
+    };
+
     useEffect(() => {
         const checkScrollable = () => {
             if (cardListRef.current) {
@@ -37,11 +33,11 @@ function CardList() {
         <div className='rooms'>
             <div className="room-list" ref={cardListRef}>
                 <div className='add-room'>
-                    <Card image_url="./image/add.svg" title="Add Room" />
+                    <Room image_url="./image/add.svg" title={`Add ${selectedFilter ? selectedFilter.replace('_', ' ') : 'Room'}`} />
                 </div>
-                {rooms.map((room, index) => (
-                    <div className='room-card' key={index}>
-                        <Card image_url={room.image_url} title={room.title} />
+                {rooms.map((room) => (
+                    <div className='room-card' key={room._id}>
+                        <Room image_url={roomImages[room.type]} title={room.name} />
                     </div>
                 ))}
             </div>
@@ -49,4 +45,4 @@ function CardList() {
     );
 }
 
-export default CardList;
+export default Rooms;

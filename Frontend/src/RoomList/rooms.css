@@ -35,6 +35,7 @@
 /* Title styling */
 .room-card h2 {
     font-size: 24px;
+    transition: font-size 0.3s ease-in-out;
     position: absolute; /* Position the title absolutely within the card */
     bottom: 0; /* Position it at the bottom */
     left: 0;
@@ -91,7 +92,9 @@
     height: 60px;
     display: flex;
     align-items: center;
-    justify-content: center;    
+    justify-content: center;   
+    position: relative;
+    top: 10px; 
 }
 
 .add-room .room-image img {
@@ -101,10 +104,70 @@
 
 .add-room .room-title {
     padding: 0;
+    transition: font-size 0.3s ease-in-out;
 }
 
 .add-room h2 {
+    position: relative;
     color: rgb(255, 255, 255, 0.5);
     margin-top: 30px;
     font-size: 24px;
+    transition: font-size 0.3s ease-in-out;
+    top: 15px;
+}
+
+.rooms {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .rooms {
+        margin: 30px 0;     
+    }
+    .room-card {
+        width: 200px;    
+        height: 250px;
+    }
+
+    .room-card h2 {
+        font-size: 20px;
+    }
+
+    .add-room h2 {
+        font-size: 20px;
+    }
+}
+
+    
+@media screen and (max-width: 480px) {
+    .rooms {
+        margin: 40px 0;     
+    }
+    .room-card {
+        width: 150px;
+        height: 250px;
+    }  
+    
+    .room-card h2 {
+        font-size: 18px;
+    }
+
+    .add-room .room-image {
+        width: 50px;
+        height: 50px;
+    }    
+
+    .add-room .room-image img {
+        width: 25px;
+        height: 25px;
+    }
+
+    .add-room h2 {
+        font-size: 18px;
+        top: 23px;
+    }
 }

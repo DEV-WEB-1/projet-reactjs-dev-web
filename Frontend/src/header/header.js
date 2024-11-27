@@ -1,7 +1,7 @@
 import "./header.css";
 import { useState } from "react";
 
-function Header() {
+function Header({ sortedHouses, setActiveHouse, activeHouse, exampleUser }) {
     const [HomedropdownOpen, setHomeDropdownOpen] = useState(false);
 
     const toggleHomeDropdown = () => {
@@ -20,6 +20,11 @@ function Header() {
         }
     };
 
+    const handleHouseClick = (house) => {
+        setActiveHouse(house);
+        setHomeDropdownOpen(false);
+    };
+
     return (
         <header>
             <div className="logo">
@@ -32,10 +37,18 @@ function Header() {
                         alt="Home Icon"
                         onClick={toggleHomeDropdown}
                     />
-                    <div className={`dropdown-home ${HomedropdownOpen? "show" : ""}`}>
-                        <p>Home</p>
-                        <p>Profile</p>
-                        <p>Settings</p>
+                    <div className={`dropdown-home ${HomedropdownOpen ? "show" : ""}`}>
+                        {sortedHouses.map((house, index) => (
+                            <div 
+                                className={`home-option ${activeHouse && activeHouse._id === house._id ? "active" : ""}`} 
+                                key={index} 
+                                onClick={() => handleHouseClick(house)}>
+                                <img className="home-icon" src="./image/home2.svg" alt="" />
+                                <img className="type-icon" src={`./image/${exampleUser.admin.includes(house._id) ? 'admin' : 'invited'}.svg`} alt="" />
+                                <p>{house.name}</p>
+                                {activeHouse && activeHouse._id === house._id && <div className="indicator"></div>}
+                            </div>
+                        ))}
                     </div>
                 </div>
                 <div className="notifications">
@@ -49,7 +62,7 @@ function Header() {
                         <p>Settings</p>
                     </div>
                 </div>
-                <img src="./image/profile.svg" alt="Profile Icon" />
+                <img src={exampleUser.image} alt="./image/profile.svg" className="profile-icon" />
             </div>
         </header>
     );

@@ -27,8 +27,8 @@
 
 /* Image styling within filter content */
 .filter-content svg {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     transition: transform 0.3s ease, fill 0.3s ease;
 }
 
@@ -53,6 +53,15 @@
 
 /* Responsive design for smaller screens */
 @media screen and (max-width: 768px) {
+    .filter-wrapper {
+        margin: 30px 20px;
+    }   
+}
+
+@media screen and (max-width: 480px) {
+    .filter-wrapper {
+        margin: 40px 20px;
+    }
     .filter {
         gap: 10px;
     }
