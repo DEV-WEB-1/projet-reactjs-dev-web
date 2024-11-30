@@ -7,6 +7,12 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.473);
 }
 
+.room img {
+    background-color: transparent;
+    border-radius: 0%;
+    box-shadow: none;
+}
+
 @media screen and (max-width: 768px) {
     .room {
         width: 200px;    
