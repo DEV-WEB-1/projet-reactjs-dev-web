@@ -4,6 +4,7 @@
     justify-content: space-between;
     margin: 10px;
     gap: 10px;
+    height: 250px;
 }
 
 .panel >* {
@@ -16,6 +17,8 @@
     background-color: #3a415a;
     border-radius: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.473);
+    height: auto;
+    cursor: pointer;
 }
 
 /* Grey overlay styling */
@@ -39,7 +42,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #dddddd;
 }
 
 .overlay-content img {
@@ -51,10 +53,15 @@
 .overlay-content p {
     margin: 0;
     text-align: center;
+    font-size: 14px; /* Adjust as necessary */
+    transition: font-size 0.3s ease-in-out; /* Smooth transition */
+    color:#c9c6c6
 }
 
 /* Positioning the camera panel's p element */
 .camera-panel > p {
+    font-size: 16px;
+    transition: font-size 0.3s ease-in-out;
     font-weight: 500;
     position: absolute;
     bottom: 5px; /* Align to the bottom with slight padding */
@@ -92,12 +99,10 @@
 .wifi-info {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 20px;
-    padding: 20px;
     text-align: left; /* Align text to the left */
-    gap: 20px; /* Space between icon and text */
+    gap: 10px; /* Space between icon and text */
     cursor: pointer;
     transition: box-shadow 0.3s ease, background-color 0.3s ease;
 }
@@ -111,6 +116,7 @@
 }
 
 .wifi-info svg {
+    position: relative;
     width: 50px;
     height: 50px;
 }
@@ -132,29 +138,26 @@
 
 .wifi-info .wifi-text {
     font-size: 24px;
+    transition: font-size 0.3s ease-in-out;
     font-weight: 500;
     margin: 0;
 }
 
 .wifi-info .status-text {
     font-size: 18px;
+    transition: font-size 0.3s ease-in-out;
     margin: 0;
 }
 
 /* Control Info styling */
 .control-info {
     position: relative;
+    display: flex;
+    justify-content: flex-start;
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 20px;
     padding: 10px;
     color: #f4f5fc;
-    text-align: left; /* Align text to the left */
-    cursor: pointer;
-    transition: box-shadow 0.3s ease;
-}
-
-.control-info:hover {
-    box-shadow: #8ebbff 0px 2px 10px;
 }
 
 .any-details {
@@ -162,8 +165,7 @@
     align-items: center;
     gap: 5px;
     position: absolute;
-    top: 0; /* Position at the top */
-    left: 10px; /* Position to the left */
+    top: 0;
 }
 
 .any-icon {
@@ -177,9 +179,10 @@
 .any-text {
     position: relative;
     font-size: 16px;
+    transition: font-size 0.3s ease-in-out;
     font-weight: 500;
     color: #f4f5fc;
-    top: 7px;
+    margin-top: 10px;
 }
 
 .any-value {
@@ -188,6 +191,127 @@
     left: 50%;
     transform: translate(-50%, -50%); /* Center the value text */
     font-size: 40px;
+    transition: font-size 0.3s ease-in-out;
     font-weight: 500;
     color: #f4f5fc;
+}
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 768px) {
+    .panel {
+        height: 215px;
+    }
+    
+    .overlay-content p {
+        font-size: 14px;
+    }
+
+    .overlay-content img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .camera-panel p {
+        font-size: 14px;
+    }
+
+    .wifi-info {
+        gap: 10px;
+    }
+
+    .wifi-info svg {
+        width: 35px;
+        height: 35px;
+    }
+
+    .wifi-info .wifi-text { 
+        font-size: 18px;
+    } */
+
+    .wifi-info .status-text {
+        font-size: 12px;
+    }
+
+    .any-details {
+        gap: 3px;
+    }
+
+    .any-icon {
+        width: 25px; /* Adjust icon size */
+        height: 25px;
+    }
+
+    .any-text {
+        font-size: 12px;
+    }
+
+    .any-value {
+        position: relative;
+        top: 35px;
+        font-size: 30px;
+    }
+
+}
+
+@media screen and (max-width: 480px) {
+    .panel {
+        height: 180px; /* Adjust height automatically based on content */
+    }
+
+    .control-panel {
+        gap: 5px;
+    }
+    
+    .overlay-content p {
+        font-size: 10px;
+    }
+
+    .overlay-content img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .camera-panel p {
+        font-size: 12px;
+    }
+
+    .wifi-info {
+        justify-content:center;
+        padding: 5px;
+        gap: 5px;
+    }
+
+    .wifi-info svg {
+        width: 25px;
+        height: 25px;
+    }   
+
+    .wifi-info .wifi-text {
+        font-size: 14px;
+    }
+
+    .wifi-info .status-text {   
+        font-size: 12px;
+    }
+
+    .any-details {
+        justify-content: center;
+        gap: 2px;
+    }
+
+    .any-icon {
+        width: 16px; /* Adjust icon size */
+        height: 16px;   
+    }
+
+    .any-text {
+        font-size: 10px;
+    }
+
+    .any-value {
+        position: relative;
+        font-size: 24px;
+        top: 30px;
+    }
+
 }

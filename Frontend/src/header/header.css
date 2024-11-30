@@ -14,9 +14,10 @@ header {
 
 /* Logo text styling */
 .logo .logo-text {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 24px;
     font-weight: bold;
-    color: #f4f5fc;
+    color: #8ebbff;
     margin-bottom: 0;
     line-height: 1;  /* Ensures text is vertically centered */
 }
@@ -30,7 +31,8 @@ header {
 }
 
 /* Icon images styling */
-.icons img {
+.icons img  {
+    border-radius: 50%;
     width: 30px;
     height: 30px;
     cursor: pointer;
@@ -55,27 +57,73 @@ header {
     margin-top: 5px;
     transform: translateY(0) scale(0); /* Initially hidden */
     transform-origin: top right; /* Growth starts from the top-right corner */
-    background-color: #3a415a;
-    border-radius: 10px; /* Optional: Rounded corners */
+    background-color: rgba(58, 65, 90, 0.399); /* Semi-transparent background */
+    backdrop-filter: blur(10px); /* Apply blur effect */
+    box-shadow: 0 5px 4px rgba(0, 0, 0, 0.473);
+    border-radius: 20px; /* Optional: Rounded corners */
     padding: 10px;
     z-index: 1;
-    min-width: 150px; /* Optional: Ensure consistent width */
+    width: 250px; /* Optional: Ensure consistent width */
     opacity: 0; /* Start with no visibility */
     transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
 }
 
 /* Show dropdown */
 .homes .dropdown-home.show {
-    transform: translateY(0) scale(1); /* Fully visible */
+    transform: translateY(0); /* Fully visible */
     opacity: 1;
+}
+
+.home-option {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    cursor: pointer;
+    color: #f4f5fc;
+}
+
+.home-option:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+}
+
+.home-option .home-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.home-option .type-icon {
+    position: relative;
+    width: 15px;
+    height: 15px;
+    top : 10px;
+    right: 12px;
+}
+
+.home-option img:hover {
+    transform: none;
+}
+
+.indicator {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%; /* Makes it a circle */
+    background-color: #00FF00; /* Online status */
+    box-shadow: 0 0 5px #00FF00;
+    right: 20px;
+}
+  
+.indicator.offline {
+    background-color: gray; /* Offline status */
 }
 
 /* Dropdown menu item styling */
 .dropdown-home p {
     margin: 0;
-    padding: 5px 10px;
+    padding: 5px;
     cursor: pointer;
-    color: white;
+    color: #f4f5fc;
 }
 
 .notifications {
@@ -110,7 +158,7 @@ header {
     margin: 0;
     padding: 5px 10px;
     cursor: pointer;
-    color: white;
+    color: #f4f5fc;
 }
 
 /* Responsive design for smaller screens */

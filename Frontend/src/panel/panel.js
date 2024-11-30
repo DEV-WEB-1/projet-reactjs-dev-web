@@ -53,7 +53,7 @@ function Panel() {
                 <div className='control-info'>
                     <div className="any-details">
                         <div className="any-icon" dangerouslySetInnerHTML={{ __html: svgs.power }} />
-                        <p className="any-text">Usage This Month</p>
+                        <p className="any-text">This Month</p>
                     </div>
                     <p className='any-value'></p>
                 </div>
