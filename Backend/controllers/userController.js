@@ -32,6 +32,7 @@ exports.getUser= async (req, res) => {
     const { email, password } = req.body;
     const user = await userService.getUser(email, password);  
     if (!user) return res.status(404).json({ message: "Utilisateur non trouvé." });
+    req.session.user = user;
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: "Erreur lors de la récupération de l'utilisateur." });
@@ -68,7 +69,7 @@ exports.updatePassword = async (req, res) => {
 };
 exports.getUserHouses = async (req, res) => {
   try {
-    const { email } = req.body;
+    const email = req.session.user.email;
 
     if (!email) return res.status(400).json({ message: "Email requis." });
 
@@ -82,7 +83,7 @@ exports.getUserHouses = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   try {
-    const { email } = req.body; // L'email est utilisé pour trouver l'utilisateur
+    const email = req.session.user.email;
     const updatedData = req.body;
 
     if (!email) {

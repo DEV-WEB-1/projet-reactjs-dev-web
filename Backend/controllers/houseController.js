@@ -1,3 +1,4 @@
+const session = require("express-session");
 const houseService = require("../services/houseService");
 
 exports.getAllHouses = async (req, res) => {
@@ -22,6 +23,8 @@ exports.creatHouse = async (req, res) => {
 exports.getHouse = async (req, res) => {
   try {
     const house = await houseService.getHouse(req.body.id);
+    req.session.house_id = house._id;
+    console.log(req.session);
     if (!house) return res.status(404).json({ message: "Maison non trouvée." });
     res.status(200).json(house);
   } catch (error) {
@@ -31,7 +34,7 @@ exports.getHouse = async (req, res) => {
 
 exports.updateHouse = async (req, res) => {
   try {
-    const { id } = req.body; // L'id est utilisé pour trouver la maison
+    const id= session.house_id;
     const updatedData = req.body;
 
     if (!id) {
