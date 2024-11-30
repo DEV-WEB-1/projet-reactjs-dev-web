@@ -62,7 +62,7 @@ function Header({ sortedHouses, setActiveHouse, activeHouse, exampleUser }) {
                         <p>Settings</p>
                     </div>
                 </div>
-                <img src={exampleUser.image} alt="./image/profile.svg" className="profile-icon" />
+                <img src="./image/profile.svg" alt="./image/profile.svg" className="profile-icon" />
             </div>
         </header>
     );

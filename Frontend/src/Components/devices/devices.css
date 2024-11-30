@@ -1,0 +1,194 @@
+.devices-container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 10px;
+    background-color: #3a415a;
+    border-radius: 20px;
+    height: 360px; /* Full height to ensure scrollability */
+    padding: 10px;
+}
+
+.devices-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: transparent;
+    border-radius: 20px;
+    width: 100%;
+    padding: 10px;
+    border-bottom: rgba(0, 0, 0, 0.411) solid 1px;
+}
+
+.devices-title h3 {
+    font-size: 24px;
+    transition: font-size 0.3s ease;
+    margin: 0;
+    color: #f4f5fc;
+}
+
+.devices-search {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    border: transparent solid 2px;
+    padding: 10px;
+    outline: none;
+    color: #8ebbff; /* Default text color */
+    transition: background-color 0.3s ease-in-out, border 0.3s ease;
+}
+
+.devices-search::placeholder {
+    color: #8ebbff;
+    font-size: 16px;
+    transition: color 0.3s ease-in-out, font-size 0.3s ease;
+}
+
+.devices-search:focus {
+    color: black; /* Text color on focus */
+    background-color: #f4f5fc; /* Optional: To emphasize focus state */
+}
+
+.devices-search:focus::placeholder {
+    color: #24293e; /* Placeholder color on focus */
+}
+
+.devices-search:hover {
+    border: #8ebbff solid 2px;
+}
+
+.devices-list {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping of items */
+    justify-content: center; /* Align items to the start */
+    overflow-y: auto; /* Enable vertical scrolling */
+    gap: 20px;
+    padding: 20px; /* Prevent content from being obscured by scrollbar */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+}
+
+.devices-list::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
+
+.devices-item {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    width: calc(25% - 20px); /* Adjust width to fit 4 items per row with margins */
+    height: 100px; /* Height */
+    position: relative;
+}
+
+.devices-item p {
+    font-size: 18px;
+    transition: font-size 0.3s ease-in-out;
+    margin: 0;
+    color: #f4f5fc;
+    white-space: nowrap; /* Prevent the text from wrapping */
+    overflow: hidden; /* Hide the overflow text */
+    text-overflow: ellipsis; /* Show ellipsis (...) for overflow text */
+}
+
+.devices-item img {
+    width: 50px;
+    height: 50px;
+}
+
+@media screen and (max-width: 768px) {
+    .devices-container {
+        height: 363px;
+    }
+    .devices-title {
+        padding: 7px 10px;
+    }
+    .devices-title h3 {
+        font-size: 20px;
+    }
+
+    .devices-search {
+        width: 180px;
+        height: 45px;
+    }
+
+    .devices-search::placeholder {
+        font-size: 14px;
+    }
+
+    .devices-list {
+        gap: 7px;
+        padding: 15px;
+    }
+
+    .devices-item {
+        margin: 7px; /* Adjusted margin to ensure better spacing */
+        padding: 7px;
+        gap: 15px;
+        width: calc(25% - 20px); /* Adjust width to fit 4 items per row with margins */
+        height: 90px; /* Height */
+    }
+
+    .devices-item p {    
+        font-size: 14px;
+        white-space: nowrap; /* Prevent the text from wrapping */
+        overflow: hidden; /* Hide the overflow text */
+        text-overflow: ellipsis; /* Show ellipsis (...) for overflow text */
+    }
+
+    .devices-item img {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .devices-container {
+        height: 348px; /* Full height to ensure scrollability */
+    }
+    .devices-title {
+        border-radius: 10px;
+        padding: 5px 10px;
+    }
+    .devices-title h3 {
+        font-size: 16px;
+    }
+
+    .devices-search {
+        border-radius: 10px;
+        width: 150px;
+        height: 40px;
+    }
+
+    .devices-search::placeholder {
+        font-size: 12px;
+    }
+
+    .devices-list {
+        gap: 5px;
+        padding: 10px;
+    }
+
+    .devices-item {    
+        margin: 5px; /* Adjusted margin to ensure better spacing */
+        padding: 5px;
+        gap: 10px;
+        width: calc(30% - 20px); /* Adjust width to fit 4 items per row with margins */
+        height: 75px; /* Height */
+    }
+
+    .devices-item p {    
+        font-size: 12px;
+        white-space: nowrap; /* Prevent the text from wrapping */
+        overflow: hidden; /* Hide the overflow text */
+        text-overflow: ellipsis; /* Show ellipsis (...) for overflow text */
+    }
+    
+    .devices-item img {
+        width: 30px;
+        height: 30px;
+    }
+}

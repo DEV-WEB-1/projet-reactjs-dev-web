@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './rooms.css';
 import Room from '../room/room';
 
 function Rooms({ rooms, selectedFilter }) {
     const cardListRef = useRef(null);
     const [isScrollable, setIsScrollable] = useState(false);
+    const navigate = useNavigate();
     const roomImages = {
-        'livingroom': './image/living room.png',
+        'livingroom': './image/livingroom.png',
         'bedroom': './image/bedroom.jpg',
         'kitchen': './image/kitchen.jpg',
         'bathroom': './image/bathroom.jpg',
@@ -29,10 +31,14 @@ function Rooms({ rooms, selectedFilter }) {
         };
     }, []);
     
+    const handleAddRoomClick = () => {
+        navigate('/add-room'); // Navigate to the AddRoom page
+    };
+
     return (
         <div className='rooms'>
             <div className="room-list" ref={cardListRef}>
-                <div className='add-room'>
+                <div className='add-room' onClick={handleAddRoomClick}>
                     <Room image_url="./image/add.svg" title={`Add ${selectedFilter ? selectedFilter.replace('_', ' ') : 'Room'}`} />
                 </div>
                 {rooms.map((room) => (

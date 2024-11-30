@@ -19,6 +19,7 @@
 
 /* Individual filter content styling */
 .filter-content {
+    display: flex;
     cursor: pointer;
     transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
     padding: 10px; /* Added padding to create space around the icon */
@@ -56,6 +57,23 @@
     .filter-wrapper {
         margin: 30px 20px;
     }   
+    .filter {
+        gap: 15px;
+
+    }
+
+    .filter-content {
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+
+    .filter-content{
+        padding: 8px 10px;
+    }
+
+    .filter-content svg {
+        width: 27px;
+        height: 27px;
+    }
 }
 
 @media screen and (max-width: 480px) {
@@ -66,8 +84,12 @@
         gap: 10px;
     }
 
-    .filter-content img {
-        width: 30px;
-        height: 30px;
+    .filter-content {
+        padding: 5px 10px; /* Adjust padding for smaller screens */
+    }
+
+    .filter-content svg {
+        width: 25px;
+        height: 25px;
     }
 }

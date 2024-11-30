@@ -164,7 +164,7 @@ header {
 /* Responsive design for smaller screens */
 @media screen and (max-width: 768px) {
     .logo .logo-text {
-        font-size: 20px;
+        font-size: 22px;
     }
 
     .icons {
@@ -172,7 +172,22 @@ header {
     }
     
     .icons img {
-        width: 30px;
-        height: 30px;
+        width: 27px;
+        height: 27px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .logo .logo-text {
+        font-size: 20px;
+    }
+
+    .icons {
+        gap: 8px;
+    }
+    
+    .icons img {
+        width: 25px;
+        height: 25px;
     }
 }

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './panel.css';
+import houseService from '../../services/houseServices';
 
 const svgs = {
     wifi: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="injected-svg" data-src="https://cdn.hugeicons.com/icons/wifi-low-signal-solid-rounded.svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" color="#9b9b9b">
@@ -16,14 +17,47 @@ const svgs = {
     </svg>`
 };
 
-function Panel() {
+function Panel({ settings, houseId }) {
     const [selectedIcon, setSelectedIcon] = useState(null);
+    const [wifiStatus, setWifiStatus] = useState('Off');
 
-    const handleIconClick = (icon) => {
+    useEffect(() => {
+        if (settings && settings.find(device => device.name === 'general-router')) {
+            const router = settings.find(device => device.name === 'general-router');
+            setWifiStatus(router.status || 'Off');
+            setSelectedIcon(router.status === 'On' ? 'wifi' : null); // Set icon as selected if Wi-Fi is on
+        }
+    }, [settings]);
+
+    const handleIconClick = async (icon) => {
         if (selectedIcon === icon) {
             setSelectedIcon(null);
         } else {
             setSelectedIcon(icon);
+        }
+    };
+
+    const toggleWiFiStatus = async () => {
+        const newStatus = wifiStatus === 'On' ? 'Off' : 'On';
+        setWifiStatus(newStatus);
+        
+        if (settings) {
+            const updatedDevices = settings.map(device => {
+                if (device.name === 'general-router') {
+                    return { ...device, status: newStatus };
+                }
+                return device;
+            });
+
+            try {
+                await houseService.updateHouse(houseId, { rooms: [{ type: 'general', devices: updatedDevices }] });
+                console.log('Wi-Fi status updated successfully');
+                setSelectedIcon(newStatus === 'On' ? 'wifi' : null); // Update selected icon based on new status
+            } catch (error) {
+                console.error('Error updating Wi-Fi status:', error);
+            }
+        } else {
+            console.error('General room settings not found.');
         }
     };
 
@@ -42,12 +76,15 @@ function Panel() {
             <div className="control-panel">
                 <div 
                     className={`wifi-info ${selectedIcon === 'wifi' ? 'selected' : ''}`}
-                    onClick={() => handleIconClick('wifi')}
+                    onClick={() => {
+                        handleIconClick('wifi');
+                        toggleWiFiStatus();
+                    }}
                 >
                     <div className="wifi-icon" dangerouslySetInnerHTML={{ __html: svgs.wifi }} />
                     <div className="wifi-details">
                         <p className="wifi-text">Wi-Fi</p>
-                        <p className="status-text">{selectedIcon === 'wifi' ? 'On' : 'Off'}</p>
+                        <p className="status-text">{wifiStatus}</p>
                     </div>
                 </div>
                 <div className='control-info'>
@@ -55,21 +92,21 @@ function Panel() {
                         <div className="any-icon" dangerouslySetInnerHTML={{ __html: svgs.power }} />
                         <p className="any-text">This Month</p>
                     </div>
-                    <p className='any-value'></p>
+                    <p className='any-value'>{settings?.find(device => device.name === 'general-compteur')?.settings['this-month'] || 0}</p>
                 </div>
                 <div className='control-info'>
                     <div className="any-details">
                         <div className="any-icon" dangerouslySetInnerHTML={{ __html: svgs.weather }} />
                         <p className="any-text">Weather</p>
                     </div>
-                    <p className='any-value'>18</p>
+                    <p className='any-value'>{settings?.find(device => device.name === 'general-temperature-sensor')?.settings.temperature || 'N/A'}</p>
                 </div>
                 <div className='control-info'>
                     <div className="any-details">
                         <div className="any-icon" dangerouslySetInnerHTML={{ __html: svgs.humidity }} />
                         <p className="any-text">Humidity</p>
                     </div>
-                    <p className='any-value'></p>
+                    <p className='any-value'>{settings?.find(device => device.name === 'general-humidity-sensor')?.settings.humidity || 'N/A'}</p>
                 </div>
             </div>
         </div>

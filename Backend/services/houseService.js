@@ -70,9 +70,19 @@ exports.creatHouse = async (houseData) => {
 
 
 // Service pour récupérer une maison par ID
-exports.getHouse= async (houseId) => {
-  return await House.findById(houseId);
+exports.getHouse = async (houseId) => {
+  try {
+    const house = await House.findById(houseId);
+    if (!house) {
+      throw new Error("House not found");
+    }
+    return house;
+  } catch (error) {
+    console.error("Error fetching house:", error);
+    throw error;
+  }
 };
+
 
 exports.updateHouse = async (id, updatedHouseData) => {
   // Met à jour la maison correspondant à l'id
