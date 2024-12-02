@@ -1,0 +1,22 @@
+.title{
+    font-size: 32px;
+    color: #f4f5fc;
+    margin: 10px 10px;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+    .title{
+        margin: 15px 10px;
+        font-size: 24px;
+    }
+    
+}
+
+@media screen and (max-width: 480px) {
+    .title{
+        margin: 20px 10px;
+        font-size: 24px;
+    }
+    
+}
