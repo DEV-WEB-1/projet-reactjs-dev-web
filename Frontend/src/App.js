@@ -36,6 +36,7 @@ function App() {
             setActiveHouse={setActiveHouse}
           />} 
         />
+        <Route path='/profil' element={<UserProfile/>} />
       </Routes>
     </Router>
   );

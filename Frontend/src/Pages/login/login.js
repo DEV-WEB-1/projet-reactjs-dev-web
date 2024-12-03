@@ -10,7 +10,7 @@ function Login() {
   const [formData, setFormData] = useState({email: '',password: ''});
   
   const history = useNavigate();
-
+//
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,22 +38,23 @@ function Login() {
     // Implémentation de la logique de connexion ici
     if (Object.keys(validationErrors).length === 0) {
 
-      console.log('Login successful ');
-      /*
+      
       try {
-        // Envoi des données au backend
-        const response = await axios.post('http://localhost:5000/api/login', formData);
-        alert(response.data.message);  // Message de succès ou erreur depuis le backend
+        // Envoi des données au backend Node.js
+        const response = await axios.post('http://localhost:3000/api/users/login', formData);
 
+        // Afficher le message de succès ou erreur
         if (response.data.success) {
+          alert('Connexion réussie');
           // Redirection vers la page d'accueil après la connexion
           history('/home');
+        } else {
+          alert('Erreur de connexion : ' + response.data.message);
         }
       } catch (error) {
-        console.error(error);
-        alert('Invalid credentials');
+        console.error('Erreur lors de la connexion :', error);
+        alert('Une erreur est survenue lors de la connexion');
       }
-        */
     }
   };
 
