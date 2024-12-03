@@ -4,8 +4,10 @@
     margin: 10px 10px;
     background-color: #3a415a;
     border-radius: 20px;
-    height: 360px; /* Full height to ensure scrollability */
-    padding: 10px;
+    height: 340px; /* Full height to ensure scrollability */
+    padding: 10px 0;
+    padding-top: 0;
+    margin-top: 0;
 }
 
 .devices-title {
@@ -13,11 +15,12 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0.037);
+    backdrop-filter: blur(30px);
     border-radius: 20px;
     width: 100%;
     padding: 10px;
-    border-bottom: rgba(0, 0, 0, 0.411) solid 1px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.411);
 }
 
 .devices-title h3 {
@@ -49,7 +52,7 @@
 }
 
 .devices-search:focus::placeholder {
-    color: #24293e; /* Placeholder color on focus */
+    color: black; /* Placeholder color on focus */
 }
 
 .devices-search:hover {
@@ -82,6 +85,17 @@
     width: calc(25% - 20px); /* Adjust width to fit 4 items per row with margins */
     height: 100px; /* Height */
     position: relative;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.473);
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.devices-item:hover {
+    box-shadow: #8ebbff 0px 2px 10px;
+}
+
+.devices-item.selected {
+    background-color: rgba(0, 0, 0, 0.4); /* Slightly darker background when selected */
 }
 
 .devices-item p {
@@ -89,7 +103,6 @@
     transition: font-size 0.3s ease-in-out;
     margin: 0;
     color: #f4f5fc;
-    white-space: nowrap; /* Prevent the text from wrapping */
     overflow: hidden; /* Hide the overflow text */
     text-overflow: ellipsis; /* Show ellipsis (...) for overflow text */
 }
@@ -99,9 +112,28 @@
     height: 50px;
 }
 
+.selected-icon {
+    position: absolute;
+    display: flex;
+    top: -5px;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    color: black;
+    background-color: #00FF00;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    pointer-events: none; /* Ensure the icon doesn't interfere with clicks */
+    opacity: 1;
+    animation: fadeIn 0.3s forwards;
+}
+
 @media screen and (max-width: 768px) {
     .devices-container {
-        height: 363px;
+        height: 338px;
     }
     .devices-title {
         padding: 7px 10px;
@@ -143,11 +175,17 @@
         width: 40px;
         height: 40px;
     }
+
+    .selected-icon {
+        width: 15px;
+        height: 15px;
+        font-size: 10px;
+    }
 }
 
 @media screen and (max-width: 480px) {
     .devices-container {
-        height: 348px; /* Full height to ensure scrollability */
+        height: 325px; /* Full height to ensure scrollability */
     }
     .devices-title {
         border-radius: 10px;
@@ -190,5 +228,20 @@
     .devices-item img {
         width: 30px;
         height: 30px;
+    }
+
+    .selected-icon {
+        width: 12px;
+        height: 12px;
+        font-size: 8px;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }

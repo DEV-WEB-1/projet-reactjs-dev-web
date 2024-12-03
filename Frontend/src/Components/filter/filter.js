@@ -1,8 +1,12 @@
 import "./filter.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function Filter({ onFilterChange }) {
-    const [selectedIcon, setSelectedIcon] = useState(null);
+function Filter({ selectedType, onFilterChange }) {
+    const [selectedIcon, setSelectedIcon] = useState(selectedType);
+
+    useEffect(() => {
+        setSelectedIcon(selectedType);
+    }, [selectedType]);
 
     const handleIconClick = (icon) => {
         const newSelectedIcon = selectedIcon === icon ? null : icon;

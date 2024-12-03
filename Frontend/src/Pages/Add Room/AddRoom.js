@@ -14,7 +14,11 @@ function AddRoom({ user, houses, activeHouse, setActiveHouse }) {
             activeHouse={activeHouse} 
             exampleUser={user}
         />
-        <Title title='Add Room'/> 
+        <div className='add-room-header'>
+          <Title title='Add Room'/> 
+          <button className='add-room-button'>Confirm</button> 
+        </div>
+        
         <RoomInfo/>    
         <Devices/>
     </div>

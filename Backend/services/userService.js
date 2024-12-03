@@ -34,9 +34,6 @@ exports.getUser= async (emailInput,passwordInput) => {
 
 };
 
-exports.updateUserImage = async (userId, imageUrl) => {
-  return await User.findByIdAndUpdate(userId, { image: imageUrl }, { new: true });
-};
 exports.checkEmailValidity = async (emailInput) => {
   try {
     const user = await User.findOne({ email: emailInput });
