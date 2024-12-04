@@ -7,5 +7,4 @@ router.post("/creatHouse", houseController.creatHouse);
 router.get("/getHouse", houseController.getHouse);
 router.put("/updateHouse", houseController.updateHouse);
 
-
 module.exports = router;

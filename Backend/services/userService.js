@@ -17,7 +17,6 @@ exports.addUser = async (userData) => {
   return await user.save();
 };
 
-
 // Service pour récupérer un utilisateur par eamil et password
 exports.getUser= async (emailInput,passwordInput) => {
   return await User.findOne({email:emailInput,password:passwordInput});
