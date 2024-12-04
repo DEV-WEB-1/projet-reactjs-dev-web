@@ -19,7 +19,6 @@ exports.creatHouse = async (req, res) => {
   }
 };
 
-
 exports.getHouse = async (req, res) => {
   try {
     const house = await houseService.getHouse(req.body.id);

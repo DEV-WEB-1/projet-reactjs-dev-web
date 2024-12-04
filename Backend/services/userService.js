@@ -19,12 +19,20 @@ exports.addUser = async (userData) => {
 
 // Service pour récupérer un utilisateur par eamil et password
 exports.getUser= async (emailInput,passwordInput) => {
-  return await User.findOne({email:emailInput,password:passwordInput});
+  try {
+    const user = await User.findOne({email:emailInput,password:passwordInput});
+    if(!user){
+      throw new Error("User not found.");
+    }
+    return user;
+  }
+  catch (error) {
+    console.error("Error fetching user:", error);
+    throw error;
+  }
+
 };
 
-exports.updateUserImage = async (userId, imageUrl) => {
-  return await User.findByIdAndUpdate(userId, { image: imageUrl }, { new: true });
-};
 exports.checkEmailValidity = async (emailInput) => {
   try {
     const user = await User.findOne({ email: emailInput });
