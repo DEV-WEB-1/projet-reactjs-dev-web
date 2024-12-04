@@ -44,7 +44,7 @@ const houseService = {
     }
   },
 
-  // Function to get a house by ID
+  // Function to get a house by ID (ID passed in the URL)
   getHouse: async (id) => {
     try {
       const response = await fetch(`/api/houses/getHouse?id=${encodeURIComponent(id)}`, {
