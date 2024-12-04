@@ -21,11 +21,9 @@ const roomNames = {
   'garden': 'Garden',
 };
 
-function RoomInfo() {
+function RoomInfo({ roomName, setRoomName, roomType, setRoomType }) {
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingType, setIsEditingType] = useState(false);
-  const [roomName, setRoomName] = useState('Living Room');
-  const [roomType, setRoomType] = useState('livingroom');
 
   const handleNameEdit = () => {
     setIsEditingName(true);
@@ -39,20 +37,24 @@ function RoomInfo() {
     setRoomName(e.target.value);
   };
 
-  const handleFilterChange = (selectedIcon) => {
-    if (selectedIcon == null) {
-      setRoomType(roomType);
-    }
-    else if (roomType !== selectedIcon) {
-      setRoomType(selectedIcon);
-      // Remove the line that updates the room name
-    }
-    
-    setIsEditingType(false);
-  };
-
   const handleNameBlur = () => {
     setIsEditingName(false);
+  };
+
+  const handleNameKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      setIsEditingName(false);
+    }
+  };
+
+  const handleFilterChange = (selectedIcon) => {
+    if (selectedIcon == null){
+      setRoomType(roomType);
+    }
+    else {
+      setRoomType(selectedIcon);
+    }
+    setIsEditingType(false);
   };
 
   return (
@@ -70,6 +72,7 @@ function RoomInfo() {
                 value={roomName}
                 onChange={handleNameChange}
                 onBlur={handleNameBlur}
+                onKeyDown={handleNameKeyDown}
                 autoFocus
               />
             ) : (

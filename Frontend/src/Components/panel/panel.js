@@ -18,99 +18,108 @@ const svgs = {
 };
 
 function Panel({ settings, houseId }) {
-    const [selectedIcon, setSelectedIcon] = useState(null);
-    const [wifiStatus, setWifiStatus] = useState('Off');
+  const [selectedIcon, setSelectedIcon] = useState(null);
+  const [wifiStatus, setWifiStatus] = useState('Off');
 
-    useEffect(() => {
-        if (settings && settings.find(device => device.name === 'general-router')) {
-            const router = settings.find(device => device.name === 'general-router');
-            setWifiStatus(router.status || 'Off');
-            setSelectedIcon(router.status === 'On' ? 'wifi' : null); // Set icon as selected if Wi-Fi is on
+  useEffect(() => {
+    if (settings && settings.find(device => device.name === 'general-router')) {
+      const router = settings.find(device => device.name === 'general-router');
+      setWifiStatus(router.status || 'Off');
+      setSelectedIcon(router.status === 'On' ? 'wifi' : null); // Set icon as selected if Wi-Fi is on
+    }
+  }, [settings]);
+
+  const handleIconClick = async (icon) => {
+    if (selectedIcon === icon) {
+      setSelectedIcon(null);
+    } else {
+      setSelectedIcon(icon);
+    }
+  };
+
+  const toggleWiFiStatus = async () => {
+    const newStatus = wifiStatus === 'On' ? 'Off' : 'On';
+    setWifiStatus(newStatus);
+    
+    if (settings) {
+      const updatedDevices = settings.map(device => {
+        if (device.name === 'general-router') {
+          return { ...device, status: newStatus };
         }
-    }, [settings]);
+        return device;
+      });
 
-    const handleIconClick = async (icon) => {
-        if (selectedIcon === icon) {
-            setSelectedIcon(null);
-        } else {
-            setSelectedIcon(icon);
-        }
-    };
+      try {
+        // Fetch the house details to ensure you update the correct room
+        const house = await houseService.getHouse(houseId);
+        const updatedRooms = house.rooms.map(room => {
+          if (room.type === 'general') {
+            return { ...room, devices: updatedDevices };
+          }
+          return room;
+        });
 
-    const toggleWiFiStatus = async () => {
-        const newStatus = wifiStatus === 'On' ? 'Off' : 'On';
-        setWifiStatus(newStatus);
-        
-        if (settings) {
-            const updatedDevices = settings.map(device => {
-                if (device.name === 'general-router') {
-                    return { ...device, status: newStatus };
-                }
-                return device;
-            });
+        await houseService.updateHouse(houseId, { rooms: updatedRooms });
+        console.log('Wi-Fi status updated successfully');
+        setSelectedIcon(newStatus === 'On' ? 'wifi' : null); // Update selected icon based on new status
+      } catch (error) {
+        console.error('Error updating Wi-Fi status:', error);
+      }
+    } else {
+      console.error('General room settings not found.');
+    }
+  };
 
-            try {
-                await houseService.updateHouse(houseId, { rooms: [{ type: 'general', devices: updatedDevices }] });
-                console.log('Wi-Fi status updated successfully');
-                setSelectedIcon(newStatus === 'On' ? 'wifi' : null); // Update selected icon based on new status
-            } catch (error) {
-                console.error('Error updating Wi-Fi status:', error);
-            }
-        } else {
-            console.error('General room settings not found.');
-        }
-    };
-
-    return (
-        <div className="panel">
-            <div className="camera-panel">
-                <div className='grey-overlay'> 
-                    <div className='overlay-content'> 
-                        <img src='./image/cameraOff.svg' alt='Logo' /> 
-                        <p>Camera Offline</p> 
-                    </div> 
-                </div>
-                <p>Camera 1</p>
-            </div>
-
-            <div className="control-panel">
-                <div 
-                    className={`wifi-info ${selectedIcon === 'wifi' ? 'selected' : ''}`}
-                    onClick={() => {
-                        handleIconClick('wifi');
-                        toggleWiFiStatus();
-                    }}
-                >
-                    <div className="wifi-icon" dangerouslySetInnerHTML={{ __html: svgs.wifi }} />
-                    <div className="wifi-details">
-                        <p className="wifi-text">Wi-Fi</p>
-                        <p className="status-text">{wifiStatus}</p>
-                    </div>
-                </div>
-                <div className='control-info'>
-                    <div className="any-details">
-                        <div className="any-icon" dangerouslySetInnerHTML={{ __html: svgs.power }} />
-                        <p className="any-text">This Month</p>
-                    </div>
-                    <p className='any-value'>{settings?.find(device => device.name === 'general-compteur')?.settings['this-month'] || 0}</p>
-                </div>
-                <div className='control-info'>
-                    <div className="any-details">
-                        <div className="any-icon" dangerouslySetInnerHTML={{ __html: svgs.weather }} />
-                        <p className="any-text">Weather</p>
-                    </div>
-                    <p className='any-value'>{settings?.find(device => device.name === 'general-temperature-sensor')?.settings.temperature || 'N/A'}</p>
-                </div>
-                <div className='control-info'>
-                    <div className="any-details">
-                        <div className="any-icon" dangerouslySetInnerHTML={{ __html: svgs.humidity }} />
-                        <p className="any-text">Humidity</p>
-                    </div>
-                    <p className='any-value'>{settings?.find(device => device.name === 'general-humidity-sensor')?.settings.humidity || 'N/A'}</p>
-                </div>
-            </div>
+  return (
+    <div className="panel">
+      <div className="camera-panel">
+        <div className='grey-overlay'> 
+          <div className='overlay-content'> 
+            <img src='./image/cameraOff.svg' alt='Logo' /> 
+            <p>Camera Offline</p> 
+          </div> 
         </div>
-    );
+        <p>Camera 1</p>
+      </div>
+
+      <div className="control-panel">
+        <div 
+          className={`wifi-info ${selectedIcon === 'wifi' ? 'selected' : ''}`}
+          onClick={() => {
+            handleIconClick('wifi');
+            toggleWiFiStatus();
+          }}
+        >
+          <div className="wifi-icon" dangerouslySetInnerHTML={{ __html: svgs.wifi }} />
+          <div className="wifi-details">
+            <p className="wifi-text">Wi-Fi</p>
+            <p className="status-text">{wifiStatus}</p>
+          </div>
+        </div>
+        <div className='control-info'>
+          <div className="any-details">
+            <div className="any-icon" dangerouslySetInnerHTML={{ __html: svgs.power }} />
+            <p className="any-text">This Month</p>
+          </div>
+          <p className='any-value'>{settings?.find(device => device.name === 'general-compteur')?.settings['this-month'] || 0}</p>
+        </div>
+        <div className='control-info'>
+          <div className="any-details">
+            <div className="any-icon" dangerouslySetInnerHTML={{ __html: svgs.weather }} />
+            <p className="any-text">Weather</p>
+          </div>
+          <p className='any-value'>{settings?.find(device => device.name === 'general-temperature-sensor')?.settings.temperature || 'N/A'}</p>
+        </div>
+        <div className='control-info'>
+          <div className="any-details">
+            <div className="any-icon" dangerouslySetInnerHTML={{ __html: svgs.humidity }} />
+            <p className="any-text">Humidity</p>
+          </div>
+          <p className='any-value'>{settings?.find(device => device.name === 'general-humidity-sensor')?.settings.humidity || 'N/A'}</p>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Panel;

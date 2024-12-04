@@ -21,8 +21,8 @@ exports.creatHouse = async (req, res) => {
 
 exports.getHouse = async (req, res) => {
   try {
-    const house = await houseService.getHouse(req.body.id);
-    req.session.houseID = house._id.toString();
+    const house = await houseService.getHouse(req.query.id);
+    req.session.houseID = house._id;
     console.log(req.session);
     if (!house) return res.status(404).json({ message: "Maison non trouvée." });
     res.status(200).json(house);

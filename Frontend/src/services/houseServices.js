@@ -67,14 +67,14 @@ const houseService = {
   },
 
   // Function to update a house
-  updateHouse: async (id, updatedHouseData) => {
+  updateHouse: async (updatedHouseData) => {
     try {
       const response = await fetch("/api/houses/updateHouse", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id, ...updatedHouseData }),
+        body: JSON.stringify({...updatedHouseData }),
       });
 
       if (!response.ok) {

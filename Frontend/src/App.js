@@ -6,6 +6,7 @@ import Register from './Pages/login/register';
 import ForgetPassword from './Pages/login/forgetpass';
 import Home from './Pages/home/home';
 import AddRoom from './Pages/Add Room/AddRoom';
+import UserProfile from './Pages/login/UserProfile';
 
 function App() {
   const [user, setUser] = useState(null);

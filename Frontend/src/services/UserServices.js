@@ -23,9 +23,9 @@ const userService = {
   },
 
   // Function to fetch houses where the user is an admin or invited
-  getUserHouses: async (email) => {
+  getUserHouses: async () => {
     try {
-      const response = await fetch(`/api/users/getUserHouses?email=${encodeURIComponent(email)}`, {
+      const response = await fetch(`/api/users/getUserHouses`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

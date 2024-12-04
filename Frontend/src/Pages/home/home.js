@@ -1,9 +1,9 @@
+import React, { useRef, useState, useEffect } from 'react';
 import Header from '../../Components/header/header';
 import Title from '../../Components/title/title';
 import Filter from '../../Components/filter/filter';
 import Rooms from '../../Components/RoomList/rooms';
 import Panel from '../../Components/panel/panel';
-import { useState, useEffect } from 'react';
 import "./home.css";
 import userService from '../../services/UserServices';
 import houseService from '../../services/houseServices';
@@ -13,10 +13,12 @@ function Home({ user, setUser, houses, setHouses, activeHouse, setActiveHouse })
   const [generalRoom, setGeneralRoom] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const hasFetchedUser = useRef(false); // Ref to prevent multiple calls
 
   const fetchUser = async (email, password) => {
     setIsLoading(true);
     try {
+      console.log('Fetching user...');
       const user = await userService.getUser(email, password);
       if (user) {
         setUser(user);
@@ -33,7 +35,8 @@ function Home({ user, setUser, houses, setHouses, activeHouse, setActiveHouse })
 
   const fetchUserHouses = async (email) => {
     try {
-      const userHouses = await userService.getUserHouses(email);
+      console.log('Fetching user houses...');
+      const userHouses = await userService.getUserHouses();
       const detailedHouses = await Promise.all(
         [...userHouses.adminHouses, ...userHouses.invitedHouses].map(async (house) => {
           return await houseService.getHouse(house.id);
@@ -48,15 +51,20 @@ function Home({ user, setUser, houses, setHouses, activeHouse, setActiveHouse })
         const roomsExcludingGeneral = detailedHouses[0].rooms.filter(room => room.type !== "general");
         setFilteredRooms(roomsExcludingGeneral);
       }
+      console.log('Detailed Houses:', detailedHouses[0]);
     } catch (error) {
       console.error("Error fetching user houses:", error);
     }
   };
 
   useEffect(() => {
-    const emailInput = "alice.johnson@example.com";
-    const passwordInput = "new_hashed_password";
-    fetchUser(emailInput, passwordInput);
+    if (!hasFetchedUser.current) {
+      hasFetchedUser.current = true; // Prevent further calls
+      console.log('useEffect called');
+      const emailInput = "alice.johnson@example.com";
+      const passwordInput = "new_hashed_password";
+      fetchUser(emailInput, passwordInput);
+    }
   }, []);
 
   const handleFilterChange = (filter) => {
@@ -73,12 +81,14 @@ function Home({ user, setUser, houses, setHouses, activeHouse, setActiveHouse })
   const handleHouseChange = async (house) => {
     setIsLoading(true);
     try {
+      console.log('Changing house...');
       const newHouse = await houseService.getHouse(house._id);
       const generalRoom = newHouse.rooms.find(room => room.type === "general");
       setGeneralRoom(generalRoom);
 
       const roomsExcludingGeneral = newHouse.rooms.filter(room => room.type !== "general");
       setActiveHouse(newHouse);
+      console.log('New House:', newHouse);
       setFilteredRooms(roomsExcludingGeneral);
       setSelectedFilter(null);
     } catch (error) {
