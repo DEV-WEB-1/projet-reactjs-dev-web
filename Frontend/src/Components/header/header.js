@@ -3,6 +3,7 @@ import { useState } from "react";
 
 function Header({ sortedHouses, setActiveHouse, activeHouse, exampleUser }) {
     const [HomedropdownOpen, setHomeDropdownOpen] = useState(false);
+    const [BelldropdownOpen, setBellDropdownOpen] = useState(false);
 
     const toggleHomeDropdown = () => {
         setHomeDropdownOpen(!HomedropdownOpen);
@@ -10,8 +11,6 @@ function Header({ sortedHouses, setActiveHouse, activeHouse, exampleUser }) {
             setBellDropdownOpen(false);
         }
     };
-
-    const [BelldropdownOpen, setBellDropdownOpen] = useState(false);
 
     const toggleBellDropdown = () => {
         setBellDropdownOpen(!BelldropdownOpen);
@@ -40,13 +39,13 @@ function Header({ sortedHouses, setActiveHouse, activeHouse, exampleUser }) {
                     <div className={`dropdown-home ${HomedropdownOpen ? "show" : ""}`}>
                         {sortedHouses.map((house, index) => (
                             <div 
-                                className={`home-option ${activeHouse && activeHouse._id === house._id ? "active" : ""}`} 
+                                className={`home-option ${activeHouse && activeHouse._id === house.id ? "active" : ""}`} 
                                 key={index} 
                                 onClick={() => handleHouseClick(house)}>
                                 <img className="home-icon" src="./image/home2.svg" alt="" />
-                                <img className="type-icon" src={`./image/${exampleUser.admin.includes(house._id) ? 'admin' : 'invited'}.svg`} alt="" />
-                                <p>{house.name}</p>
-                                {activeHouse && activeHouse._id === house._id && <div className="indicator"></div>}
+                                <img className="type-icon" src={`./image/${exampleUser.admin.includes(house.id) ? 'admin' : 'invited'}.svg`} alt="" />
+                                <p>{house.nom}</p>
+                                {activeHouse && activeHouse._id === house.id && <div className="indicator"></div>}
                             </div>
                         ))}
                     </div>

@@ -36,8 +36,9 @@ function Home({ user, setUser, houses, setHouses, activeHouse, setActiveHouse })
     try {
       console.log('Fetching user houses...');
       const userHouses = await userService.getUserHouses();
-      setHouses([...userHouses.adminHouses, ...userHouses.invitedHouses]);
-
+      const houses = [...userHouses.adminHouses, ...userHouses.invitedHouses];
+      setHouses(houses);
+      console.log('User Houses:', houses);
       const houseId = "6745eac29d37c213325a5740"; // Set the specific active house ID
       const activeHouseDetail = await houseService.getHouse(houseId);
       setActiveHouse(activeHouseDetail);
@@ -70,12 +71,32 @@ function Home({ user, setUser, houses, setHouses, activeHouse, setActiveHouse })
     }
   };
 
+  const handleHouseChange = async (house) => {
+    setIsLoading(true);
+    try {
+      console.log('Changing house...');
+      const newHouse = await houseService.getHouse(house.id);
+      const generalRoom = newHouse.rooms.find(room => room.type === "general");
+      setGeneralRoom(generalRoom);
+
+      const roomsExcludingGeneral = newHouse.rooms.filter(room => room.type !== "general");
+      setActiveHouse(newHouse);
+      console.log('New House:', newHouse);
+      setFilteredRooms(roomsExcludingGeneral);
+      setSelectedFilter(null);
+    } catch (error) {
+      console.error("Error loading new house:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className={`home-container ${isLoading ? 'loading' : ''}`}>
       {isLoading && <div className="loader"></div>}
       <Header 
         sortedHouses={houses} 
-        setActiveHouse={setActiveHouse} 
+        setActiveHouse={handleHouseChange} 
         activeHouse={activeHouse} 
         exampleUser={user}
       />
