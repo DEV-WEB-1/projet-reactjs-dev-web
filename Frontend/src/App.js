@@ -7,6 +7,7 @@ import ForgetPassword from './Pages/login/forgetpass';
 import Home from './Pages/home/home';
 import AddRoom from './Pages/Add Room/AddRoom';
 import UserProfile from './Pages/login/UserProfile';
+import Houses from './Pages/houses/houses';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -16,28 +17,40 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Login setUser={setUser} />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
-        <Route path="/home" element={
-          <Home 
-            user={user} 
-            setUser={setUser} 
-            houses={houses} 
-            setHouses={setHouses} 
-            activeHouse={activeHouse} 
-            setActiveHouse={setActiveHouse}
-          />} 
+        <Route 
+          path="/houses" 
+          element={<Houses 
+          user={user}
+          setHouses={setHouses}
+          setActiveHouse={setActiveHouse} />} />
+        <Route
+          path="/home"
+          element={
+            <Home
+              user={user}
+              setUser={setUser}
+              houses={houses}
+              setHouses={setHouses}
+              activeHouse={activeHouse}
+              setActiveHouse={setActiveHouse}
+            />
+          }
         />
-        <Route path="/add-room" element={
-          <AddRoom 
-            user={user} 
-            houses={houses} 
-            activeHouse={activeHouse} 
-            setActiveHouse={setActiveHouse}
-          />} 
+        <Route
+          path="/add-room"
+          element={
+            <AddRoom
+              user={user}
+              houses={houses}
+              activeHouse={activeHouse}
+              setActiveHouse={setActiveHouse}
+            />
+          }
         />
-        <Route path='/profil' element={<UserProfile/>} />
+        <Route path="/profile" element={<UserProfile />} />
       </Routes>
     </Router>
   );

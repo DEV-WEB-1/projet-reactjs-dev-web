@@ -120,15 +120,35 @@
     width: 20px;
     height: 20px;
     color: black;
-    background-color: #00FF00;
+    background-color: #8ebbff;
     border-radius: 50%;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
     font-weight: bold;
     pointer-events: none; /* Ensure the icon doesn't interfere with clicks */
     opacity: 1;
     animation: fadeIn 0.3s forwards;
+}
+
+.selected-icon p {
+    font-size: 12px;
+    color: #3a415a;
+}
+
+.remove-icon img{
+    position: absolute;
+    top: -5px;
+    left: 0; /* Position at the top left */
+    width: 20px;
+    height: 20px;
+    cursor: pointer; /* Ensure it can be clicked */
+    opacity: 1;
+    animation: fadeIn 0.3s forwards;
+    transition: transform 0.3s ease;
+}
+
+.remove-icon img:hover {
+    transform: scale(1.1);
 }
 
 @media screen and (max-width: 768px) {
@@ -179,7 +199,15 @@
     .selected-icon {
         width: 15px;
         height: 15px;
+    }
+
+    .selected-icon p {
         font-size: 10px;
+    }
+
+    .remove-icon img {  
+        width: 15px;
+        height: 15px;
     }
 }
 
@@ -233,7 +261,15 @@
     .selected-icon {
         width: 12px;
         height: 12px;
+    }
+
+    .selected-icon p {
         font-size: 8px;
+    }
+
+    .remove-icon img {
+        width: 12px;
+        height: 12px;
     }
 }
 

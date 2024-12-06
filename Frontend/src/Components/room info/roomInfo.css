@@ -74,12 +74,11 @@
     margin: 0;
 }
 
-.room-name-input {
+.room-name input {
     font-size: 26px;
     transition: font-size 0.3s ease, border 0.3s ease, background-color 0.3s ease, opacity 0.3s ease; /* Add transition for opacity */
     text-align: left;
     margin: 0;
-    border: #88c0d0 1px solid;
     border-radius: 17px;
     padding: 5px;
     background-color: #f4f5fc;
@@ -179,7 +178,7 @@
         font-size: 20px;
     }
 
-    .room-name-input {
+    .room-name input {
         font-size: 20px;
     }
 
@@ -242,7 +241,7 @@
         font-size: 16px;
     }
 
-    .room-name-input {
+    .room-name input {
         font-size: 16px;
     }
 

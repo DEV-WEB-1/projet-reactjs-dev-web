@@ -12,6 +12,7 @@ function AddRoom({ user, houses, activeHouse, setActiveHouse }) {
   const [roomType, setRoomType] = useState('livingroom');
   const [selectedDevices, setSelectedDevices] = useState([]);
   const navigate = useNavigate();
+  console.log(activeHouse); 
 
   const getDeviceWithNumber = (devices) => {
     const deviceCount = {};

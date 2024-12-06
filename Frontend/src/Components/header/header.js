@@ -1,9 +1,13 @@
 import "./header.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import houseService from "../../services/houseServices";
 
-function Header({ sortedHouses, setActiveHouse, activeHouse, exampleUser }) {
+function Header({ sortedHouses, setActiveHouse, activeHouse, user, setIsLoading }) {
     const [HomedropdownOpen, setHomeDropdownOpen] = useState(false);
     const [BelldropdownOpen, setBellDropdownOpen] = useState(false);
+    const navigate = useNavigate(); // Initialize the navigate function
+    console.log(user.image)
 
     const toggleHomeDropdown = () => {
         setHomeDropdownOpen(!HomedropdownOpen);
@@ -19,9 +23,14 @@ function Header({ sortedHouses, setActiveHouse, activeHouse, exampleUser }) {
         }
     };
 
-    const handleHouseClick = (house) => {
-        setActiveHouse(house);
+    const handleHouseClick = async (house) => {
+        setIsLoading(true);
+        console.log('Changing house...');
+        const newHouse = await houseService.getHouse(house.id);
+        setActiveHouse(newHouse); // Update the active house state
         setHomeDropdownOpen(false);
+        setIsLoading(false);
+        navigate('/home'); // Redirect to the home page
     };
 
     return (
@@ -39,11 +48,11 @@ function Header({ sortedHouses, setActiveHouse, activeHouse, exampleUser }) {
                     <div className={`dropdown-home ${HomedropdownOpen ? "show" : ""}`}>
                         {sortedHouses.map((house, index) => (
                             <div 
-                                className={`home-option ${activeHouse && activeHouse._id === house.id ? "active" : ""}`} 
+                                className={`home-option ${activeHouse && activeHouse._id === house._id ? "active" : ""}`} 
                                 key={index} 
                                 onClick={() => handleHouseClick(house)}>
                                 <img className="home-icon" src="./image/home2.svg" alt="" />
-                                <img className="type-icon" src={`./image/${exampleUser.admin.includes(house.id) ? 'admin' : 'invited'}.svg`} alt="" />
+                                <img className="type-icon" src={`./image/${user.admin.includes(house.id) ? 'admin' : 'invited'}.svg`} alt="" />
                                 <p>{house.nom}</p>
                                 {activeHouse && activeHouse._id === house.id && <div className="indicator"></div>}
                             </div>
@@ -61,10 +70,12 @@ function Header({ sortedHouses, setActiveHouse, activeHouse, exampleUser }) {
                         <p>Settings</p>
                     </div>
                 </div>
-                <img src="./image/profile.svg" alt="./image/profile.svg" className="profile-icon" />
+                <img src={user.image != null ? user.image : "./image/profile.svg"} alt="./image/profile.svg" className="profile-icon" 
+                    onClick={() => navigate('/profile')}/>
             </div>
         </header>
-    );
+    );  
 }
 
 export default Header;
+

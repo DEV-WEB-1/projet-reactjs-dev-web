@@ -1,4 +1,5 @@
 import './devices.css';
+import { useEffect, useState } from 'react';
 
 function Devices({ selectedDevices, setSelectedDevices }) {
   const deviceData = [
@@ -25,30 +26,74 @@ function Devices({ selectedDevices, setSelectedDevices }) {
     { name: "Power Meter", img: "./image/power_meter.png" },
   ];
 
+  const [searchQuery, setSearchQuery] = useState('');
+
   const handleDeviceClick = (name) => {
-    setSelectedDevices((prevSelected) =>
-      prevSelected.includes(name)
-        ? prevSelected.filter(deviceName => deviceName !== name)
-        : [...prevSelected, name]
-    );
+    setSelectedDevices((prevSelected) => [...prevSelected, name]);
   };
+
+  const handleRemoveDevice = (name, e) => {
+    e.stopPropagation(); // Prevent the click event from propagating to the parent
+    setSelectedDevices((prevSelected) => {
+      const index = prevSelected.indexOf(name);
+      if (index !== -1) {
+        const updatedList = [...prevSelected];
+        updatedList.splice(index, 1);
+        return updatedList;
+      }
+      return prevSelected;
+    });
+  };
+
+  const countSelectedDevices = (name) => {
+    return selectedDevices.filter(deviceName => deviceName === name).length;
+  };
+
+  useEffect(() => {
+    document.querySelectorAll('.devices-item').forEach(item => {
+      const count = countSelectedDevices(item.querySelector('p').innerText);
+      item.classList.toggle('selected', count > 0);
+    });
+  }, [selectedDevices]);
+
+  const filteredDevices = deviceData.filter(device =>
+    device.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="devices-container">
       <div className="devices-title">
         <h3>Devices</h3>
-        <input type="text" className='devices-search' placeholder='Device name'/>
+        <input
+          type="text"
+          className='devices-search'
+          placeholder='Device name'
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
       </div>
       <div className="devices-list">
-        {deviceData.map((device) => (
+        {filteredDevices.map((device) => (
           <div
-            className={`devices-item ${selectedDevices.includes(device.name) ? 'selected' : ''}`}
+            className={`devices-item`}
             key={device.name}
             onClick={() => handleDeviceClick(device.name)}
           >
-            <img src={device.img} alt='device'/>
+            <img src={device.img} alt='device' />
             <p>{device.name}</p>
-            {selectedDevices.includes(device.name) && <div className="selected-icon">✓</div>}
+            {countSelectedDevices(device.name) > 0 && (
+              <>
+                <div className="selected-icon">
+                  <p>{countSelectedDevices(device.name)}</p>
+                </div>
+                <div
+                  className="remove-icon"
+                  onClick={(e) => handleRemoveDevice(device.name, e)}
+                >
+                  <img src='./image/remove.svg' alt='remove'/>
+                </div>
+              </>
+            )}
           </div>
         ))}
       </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Header from '../../Components/header/header';
 import Title from '../../Components/title/title';
 import Filter from '../../Components/filter/filter';
@@ -8,57 +8,32 @@ import "./home.css";
 import userService from '../../services/UserServices';
 import houseService from '../../services/houseServices';
 
+
 function Home({ user, setUser, houses, setHouses, activeHouse, setActiveHouse }) {
   const [filteredRooms, setFilteredRooms] = useState([]);
   const [generalRoom, setGeneralRoom] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchUser = async (email, password) => {
-    setIsLoading(true);
+  const fetchRooms = async () => {
     try {
-      console.log('Fetching user...');
-      const user = await userService.getUser(email, password);
-      if (user) {
-        setUser(user);
-        await fetchUserHouses();
-      } else {
-        console.error("User not found");
-      }
-    } catch (error) {
-      console.error("Error fetching user:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
-  const fetchUserHouses = async () => {
-    try {
-      console.log('Fetching user houses...');
-      const userHouses = await userService.getUserHouses();
-      const houses = [...userHouses.adminHouses, ...userHouses.invitedHouses];
-      setHouses(houses);
-      console.log('User Houses:', houses);
-      const houseId = "6745eac29d37c213325a5740"; // Set the specific active house ID
-      const activeHouseDetail = await houseService.getHouse(houseId);
-      setActiveHouse(activeHouseDetail);
-      const generalRoom = activeHouseDetail.rooms.find(room => room.type === "general");
+      console.log('activeHouse:', activeHouse);
+      const generalRoom = activeHouse.rooms.find(room => room.type === "general");
       setGeneralRoom(generalRoom);
-
-      const roomsExcludingGeneral = activeHouseDetail.rooms.filter(room => room.type !== "general");
+      const roomsExcludingGeneral = activeHouse.rooms.filter(room => room.type !== "general");
       setFilteredRooms(roomsExcludingGeneral);
-      console.log('Detailed Active House:', activeHouseDetail);
+      console.log('Detailed Active House:', activeHouse);
     } catch (error) {
       console.error("Error fetching user houses:", error);
     }
   };
 
   useEffect(() => {
-    console.log('useEffect called');
-    const emailInput = "alice.johnson@example.com";
-    const passwordInput = "new_hashed_password";
-    fetchUser(emailInput, passwordInput);
-  }, []);
+    if (activeHouse) {
+      fetchRooms();
+    }
+  }, [activeHouse]);
 
   const handleFilterChange = (filter) => {
     setSelectedFilter(filter);
@@ -71,11 +46,8 @@ function Home({ user, setUser, houses, setHouses, activeHouse, setActiveHouse })
     }
   };
 
-  const handleHouseChange = async (house) => {
-    setIsLoading(true);
+  const handleHouseChange = (newHouse) => {
     try {
-      console.log('Changing house...');
-      const newHouse = await houseService.getHouse(house.id);
       const generalRoom = newHouse.rooms.find(room => room.type === "general");
       setGeneralRoom(generalRoom);
 
@@ -83,11 +55,9 @@ function Home({ user, setUser, houses, setHouses, activeHouse, setActiveHouse })
       setActiveHouse(newHouse);
       console.log('New House:', newHouse);
       setFilteredRooms(roomsExcludingGeneral);
-      setSelectedFilter(null);
+      setSelectedFilter(null);  
     } catch (error) {
       console.error("Error loading new house:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -98,7 +68,8 @@ function Home({ user, setUser, houses, setHouses, activeHouse, setActiveHouse })
         sortedHouses={houses} 
         setActiveHouse={handleHouseChange} 
         activeHouse={activeHouse} 
-        exampleUser={user}
+        user={user}
+        setIsLoading={setIsLoading}
       />
       <Title title={user ? `Welcome, ${user.name}` : 'Welcome'} />
       <Filter onFilterChange={handleFilterChange} />

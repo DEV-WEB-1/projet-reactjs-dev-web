@@ -12,7 +12,7 @@ exports.getAllUsers = async (req, res) => {
 
 exports.addUser = async (req, res) => {
   try {
-    const { email, password, name, image } = req.body;
+    const { email, password, name, image, gender } = req.body;
 
     // Validation des champs obligatoires
     if (!email || !password || !name) {
@@ -20,7 +20,7 @@ exports.addUser = async (req, res) => {
     }
 
     // Appel au service pour ajouter l'utilisateur
-    const newUser = await userService.addUser({ email, password, name, image });
+    const newUser = await userService.addUser({ email, password, name, image, gender });
     res.status(201).json(newUser);
   } catch (error) {
     res.status(500).json({ message: "Erreur lors de l'ajout de l'utilisateur." });
@@ -46,7 +46,7 @@ exports.checkEmailValidity = async (req, res) => {
     if (isEmailValid) {
       res.status(200).json({ valid: true, message: "L'email existe déjà." });
     } else {
-      res.status(200).json({ valid: false, message: "L'email est disponible." });
+      res.status(200).json({ valid: false, message: "L'email n'existe pas." });
     }
   } catch (error) {
     res.status(500).json({ message: "Erreur lors de la vérification de l'email." });

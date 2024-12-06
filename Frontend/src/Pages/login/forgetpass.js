@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import userService from '../../services/UserServices';
 
 function ForgetPassword() {
   const [email, setEmail] = useState('');
@@ -9,6 +10,7 @@ function ForgetPassword() {
   const [successMessage, setSuccessMessage] = useState(''); // Message de succès
   const [isLoading, setIsLoading] = useState(false); // Pour gérer l'état de chargement
   const [isEmailValid, setIsEmailValid] = useState(false); // Pour vérifier la validité de l'email
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,15 +29,20 @@ function ForgetPassword() {
     setIsLoading(true);
 
     try {
-      // Vérifier si l'email existe
-      const response = await axios.post('http://localhost:3000/api/users/check-email', { email });
-      if (response.data.Valid) {
-        setIsEmailValid(true);
-        setError('');
-      } else {
-        setError('L\'email n\'existe pas. Veuillez vérifier votre adresse email.');
-        setIsLoading(false);
-        return;
+
+      if(!isEmailValid) {
+        // Vérifier si l'email existe
+        const response = await userService.checkEmailValidity(email);
+        if (response.valid) {
+          console.log(response.message);
+          setIsEmailValid(true);
+          setError('');
+        } else {
+          console.log(response.message);
+          setError('L\'email n\'existe pas. Veuillez vérifier votre adresse email.');
+          setIsLoading(false);
+          return;
+        }
       }
 
       // Si l'email est valide, demander un nouveau mot de passe
@@ -46,14 +53,22 @@ function ForgetPassword() {
           return;
         }
 
+        if (newPassword.length < 6) {
+          setError('Le mot de passe doit contenir au moins 6 caractères.');
+          setIsLoading(false);
+          return;
+        }
+
         // Envoi de la demande de mise à jour du mot de passe
-        const updateResponse = await axios.patch('http://localhost:3000/api/users/update-password', { email, newPassword });
-        if (updateResponse.data.success) {
-          setSuccessMessage(updateResponse.data.message);
+        const updateResponse = await userService.updatePassword(email, newPassword);
+        if (updateResponse.success) {
+          console.log(updateResponse.message);
           setEmail('');
           setNewPassword('');
+          navigate('/');
         } else {
-          setError(updateResponse.data.message);
+          console.log(updateResponse.message);
+          setError('Une erreur s\'est produite lors de la réinitialisation du mot de passe.');
         }
       }
     } catch (error) {

@@ -1,55 +1,67 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import userService from '../../services/UserServices'; // Import userService
 
 function Register() {
-  const [formData, setFormData] = useState({ fullName: '', email: '', password: '', gender: '', image: '' });
+  const [formData, setFormData] = useState({ fullName: '', email: '', password: '', gender: '', image: null });
   const [errors, setErrors] = useState({});
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value, files } = e.target;
+    if (name === 'image') {
+      setFormData({ ...formData, [name]: e.target.value });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { fullName, email, password, gender } = formData;
+    const { fullName, email, password, gender, image } = formData;
 
     let validationErrors = {};
 
     // Validation
     if (!fullName) validationErrors.fullName = 'Veuillez entrer votre nom complet.';
     if (!email) validationErrors.email = 'Veuillez entrer votre email.';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-      validationErrors.email = 'Veuillez entrer un email valide.';
-
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) validationErrors.email = 'Veuillez entrer un email valide.';
     if (!password) validationErrors.password = 'Veuillez créer un mot de passe.';
-    else if (password.length < 6)
-      validationErrors.password = 'Le mot de passe doit comporter au moins 6 caractères.';
-
+    else if (password.length < 6) validationErrors.password = 'Le mot de passe doit comporter au moins 6 caractères.';
     if (!gender) validationErrors.gender = 'Veuillez sélectionner votre genre.';
 
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
       try {
-        // Logique pour envoyer les données au serveur avec Axios
-        const response = await axios.post('http://localhost:3000/api/users/register', formData);
-        alert(response.data.message); // Message de succès ou d'erreur du backend
-        if (response.data.success) {
-          // Redirection vers la page de connexion après l'inscription
-          history('/');
+        // Prepare the user data
+        const formData = {
+          name : fullName,
+          email : email,
+          password : password,
+          gender : gender
+        };
+
+        if (image !== null) {
+          formData.image = image;
+        }
+
+        // Add user using userService
+        const response = await userService.addUser(formData);
+
+        if (response) {
+          // Redirect to the login page after registration
+          navigate('/');
         }
       } catch (error) {
         console.error(error);
-        alert('Erreur lors de l\'inscription');
+        alert("Erreur lors de l'inscription");
       }
     }
   };
 
   const handleReset = () => {
-    setFormData({ fullName: '', email: '', password: '', gender: '', image: '' });
+    setFormData({ fullName: '', email: '', password: '', gender: '', image: null });
     setErrors({});
   };
 
@@ -104,7 +116,7 @@ function Register() {
           {/* Champ Image (si nécessaire) */}
           <div className="form-group">
             <label>Profile Image</label>
-            <input type="file" name="image" className="form-control" onChange={(e) => setFormData({ ...formData, image: e.target.files[0] })} />
+            <input type="text" name="image" className="form-control" onChange={handleChange} />
           </div>
 
           {/* Boutons */}

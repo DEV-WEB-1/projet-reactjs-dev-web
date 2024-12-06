@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema({
   name: String,
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
+  gender: { type: String, default: "" },
   image: { type: String, default: "" },
   admin: { type: [String], default: [] }, // Par défaut une liste vide
   invited: { type: [String], default: [] }, // Par défaut une liste vide
