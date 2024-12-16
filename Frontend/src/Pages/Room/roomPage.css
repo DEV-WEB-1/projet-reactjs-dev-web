@@ -1,0 +1,48 @@
+.roomPage{
+    position: relative;
+}
+
+.room-header{
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.room-header button{
+    margin: 10px 10px;
+    padding: 10px;
+    background-color: #8ebbff;
+    border-radius: 15px;
+    border: none;
+    color: #3a415a;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, font-size 0.3s ease, padding 0.3s ease;
+}
+
+.room-header button:hover{
+    background-color: #3a415a;
+    color: #8ebbff;
+}
+
+@media screen and (max-width: 768px) {
+    .room-header button{
+        margin: 15px 10px;
+        font-size: 14px;
+        padding: 7px;
+        border-radius: 15px;
+    } 
+}
+
+@media screen and (max-width: 480px) {
+    .room-header button{
+        margin: 20px 10px;
+        padding: 5px;
+        width: fit-content;
+        height: fit-content;
+        font-size: 12px;
+        border-radius: 10px;
+    }
+    
+}

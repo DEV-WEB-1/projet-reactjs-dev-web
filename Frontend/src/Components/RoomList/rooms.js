@@ -35,6 +35,10 @@ function Rooms({ rooms, selectedFilter }) {
         navigate('/add-room'); // Navigate to the AddRoom page
     };
 
+    const handleRoomClick = (roomName) => {
+        navigate(`/room/${roomName}`);
+    }
+
     return (
         <div className='rooms'>
             <div className="room-list" ref={cardListRef}>
@@ -42,7 +46,7 @@ function Rooms({ rooms, selectedFilter }) {
                     <Room image_url="./image/add.svg" title={`Add ${selectedFilter ? selectedFilter.replace('_', ' ') : 'Room'}`} />
                 </div>
                 {rooms.map((room) => (
-                    <div className='room-card' key={room._id}>
+                    <div className='room-card' key={room._id} onClick={() => handleRoomClick(room.name)}>
                         <Room image_url={roomImages[room.type]} title={room.name} />
                     </div>
                 ))}

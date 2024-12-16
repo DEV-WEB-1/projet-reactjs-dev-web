@@ -8,11 +8,14 @@ import Home from './Pages/home/home';
 import AddRoom from './Pages/Add Room/AddRoom';
 import UserProfile from './Pages/login/UserProfile';
 import Houses from './Pages/houses/houses';
+import Room from './Pages/Room/roomPage';
 
 function App() {
   const [user, setUser] = useState(null);
   const [houses, setHouses] = useState([]);
   const [activeHouse, setActiveHouse] = useState(null);
+  const [rooms, setRooms] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <Router>
@@ -23,9 +26,12 @@ function App() {
         <Route 
           path="/houses" 
           element={<Houses 
+          houses={houses}
           user={user}
+          setUser={setUser}
           setHouses={setHouses}
-          setActiveHouse={setActiveHouse} />} />
+          setActiveHouse={setActiveHouse}
+          setIsLoading={setIsLoading} />} />
         <Route
           path="/home"
           element={
@@ -36,6 +42,9 @@ function App() {
               setHouses={setHouses}
               activeHouse={activeHouse}
               setActiveHouse={setActiveHouse}
+              setRooms={setRooms}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
             />
           }
         />
@@ -47,10 +56,22 @@ function App() {
               houses={houses}
               activeHouse={activeHouse}
               setActiveHouse={setActiveHouse}
+              rooms={rooms}
+              setIsLoading={setIsLoading}
             />
           }
         />
         <Route path="/profile" element={<UserProfile />} />
+        <Route path="/room/:roomName" 
+          element={<Room 
+          user={user}
+          houses={houses}
+          activeHouse={activeHouse}
+          setActiveHouse={setActiveHouse}
+          rooms={rooms}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          />} />
       </Routes>
     </Router>
   );

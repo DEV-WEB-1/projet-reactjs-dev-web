@@ -7,7 +7,8 @@ function Header({ sortedHouses, setActiveHouse, activeHouse, user, setIsLoading 
     const [HomedropdownOpen, setHomeDropdownOpen] = useState(false);
     const [BelldropdownOpen, setBellDropdownOpen] = useState(false);
     const navigate = useNavigate(); // Initialize the navigate function
-    console.log(user.image)
+
+    console.log('sortedHouses:', sortedHouses);
 
     const toggleHomeDropdown = () => {
         setHomeDropdownOpen(!HomedropdownOpen);
@@ -41,18 +42,18 @@ function Header({ sortedHouses, setActiveHouse, activeHouse, user, setIsLoading 
             <div className="icons">
                 <div className="homes">
                     <img
-                        src="./image/home.svg"
+                        src="../image/home.svg"
                         alt="Home Icon"
                         onClick={toggleHomeDropdown}
                     />
                     <div className={`dropdown-home ${HomedropdownOpen ? "show" : ""}`}>
                         {sortedHouses.map((house, index) => (
                             <div 
-                                className={`home-option ${activeHouse && activeHouse._id === house._id ? "active" : ""}`} 
+                                className={`home-option ${activeHouse && activeHouse._id === house.id ? "active" : ""}`} 
                                 key={index} 
                                 onClick={() => handleHouseClick(house)}>
-                                <img className="home-icon" src="./image/home2.svg" alt="" />
-                                <img className="type-icon" src={`./image/${user.admin.includes(house.id) ? 'admin' : 'invited'}.svg`} alt="" />
+                                <img className="home-icon" src="../image/home2.svg" alt="" />
+                                <img className="type-icon" src={`../image/${user.admin.includes(house.id) ? 'admin' : 'invited'}.svg`} alt="" />
                                 <p>{house.nom}</p>
                                 {activeHouse && activeHouse._id === house.id && <div className="indicator"></div>}
                             </div>
@@ -61,7 +62,7 @@ function Header({ sortedHouses, setActiveHouse, activeHouse, user, setIsLoading 
                 </div>
                 <div className="notifications">
                     <img 
-                        src="./image/notification.svg" 
+                        src="../image/notification.svg" 
                         alt="Notifications Icon" 
                         onClick={toggleBellDropdown}/>
                     <div className={`dropdown-notifications ${BelldropdownOpen ? "show" : ""}`}>
@@ -70,7 +71,7 @@ function Header({ sortedHouses, setActiveHouse, activeHouse, user, setIsLoading 
                         <p>Settings</p>
                     </div>
                 </div>
-                <img src={user.image != null ? user.image : "./image/profile.svg"} alt="./image/profile.svg" className="profile-icon" 
+                <img src={user.image != null ? user.image : "../image/profile.svg"} alt="../image/profile.svg" className="profile-icon" 
                     onClick={() => navigate('/profile')}/>
             </div>
         </header>

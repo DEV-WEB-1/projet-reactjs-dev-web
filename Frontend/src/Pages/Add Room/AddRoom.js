@@ -7,12 +7,12 @@ import Devices from '../../Components/devices/devices';
 import houseService from '../../services/houseServices';
 import './AddRoom.css';
 
-function AddRoom({ user, houses, activeHouse, setActiveHouse }) {
+function AddRoom({ user, houses, activeHouse, setActiveHouse, setIsLoading}) {
   const [roomName, setRoomName] = useState('Living Room');
   const [roomType, setRoomType] = useState('livingroom');
   const [selectedDevices, setSelectedDevices] = useState([]);
   const navigate = useNavigate();
-  console.log(activeHouse); 
+  console.log(activeHouse);
 
   const getDeviceWithNumber = (devices) => {
     const deviceCount = {};
@@ -60,7 +60,8 @@ function AddRoom({ user, houses, activeHouse, setActiveHouse }) {
         sortedHouses={houses}
         setActiveHouse={setActiveHouse}
         activeHouse={activeHouse}
-        exampleUser={user}
+        user={user}
+        setIsLoading={setIsLoading}
       />
       <div className='add-room-header'>
         <Title title='Add Room' />

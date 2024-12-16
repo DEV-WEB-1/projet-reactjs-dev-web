@@ -1,0 +1,590 @@
+.device {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+    width: max-content;
+    height: max-content;
+    background-color: #3a415a;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.473);
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+    padding: 0;
+}
+
+.light {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+}
+
+.light-image {
+    position: relative;
+    align-self: center;
+    width: 200px;
+    height: 150px;
+    margin-right: 20px;
+}
+
+.light-panel {
+    margin: 20px;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+}
+
+.colors {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 20px;
+}
+
+.color {
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.7); /* Example: Lighter */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.light-controls {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.slider {
+    position: relative;
+    margin-right: 20px;
+}
+
+.slider-input {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 250px; /* Adjust the width as needed */
+    height: 15px; /* Increased height for a thicker slider */
+    background-color: rgba(255, 255, 255, 0.2); /* Adjust track background color */
+    border-radius: 10px; /* Smooth edges for the track */
+    outline: none;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* Styling for the slider thumb */
+.slider-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px; /* Increased width for a thicker thumb */
+    height: 20px; /* Increased height for a thicker thumb */
+    background-color: #fff; /* Thumb color */
+    border-radius: 50%; /* Circular thumb */
+    border: 2px solid #3a415a; /* Border color to match design */
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Slight shadow for a 3D effect */
+}
+
+/* For Firefox */
+.slider-input::-moz-range-thumb {
+    width: 20px; /* Same width for Firefox */
+    height: 20px; /* Same height for Firefox */
+    background-color: #fff; /* Thumb color */
+    border-radius: 50%;
+    border: 2px solid #3a415a;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+
+.slider-value {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #2b3043;
+    color: #8ebbff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.switch {
+    display: inline-block;
+    position: relative;
+    width: 50px; /* Adjust width as needed */
+    height: 25px; /* Adjust height as needed */
+}
+
+.switch-label {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    user-select: none;
+}
+
+.switch-checkbox {
+    display: none; /* Hide the checkbox */
+}
+
+.switch-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 25px; /* Half the height for a rounded appearance */
+    transition: 0.4s;
+}
+
+.switch-slider:before {
+    content: "";
+    position: absolute;
+    height: 20px; /* Slightly smaller than the switch height */
+    width: 20px;
+    left: 4px;
+    bottom: 50%;
+    transform: translateY(50%);
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Change the slider background when checked */
+.switch-checkbox:checked + .switch-slider {
+    background-color: #8ebbff; /* Green when switched on */
+}
+
+/* Move the slider thumb when checked */
+.switch-checkbox:checked + .switch-slider:before {
+    transform: translate(24px, 50%); /* Move horizontally */
+}
+
+.router {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the left (optional) */
+    gap: 15px; /* Add spacing between items */
+    padding: 20px; /* Add some padding around the router settings */
+    background-color: #3a415a; /* Light background for better visibility */
+    border-radius: 20px;
+    width: 100%; /* Adjust as needed for layout */
+    width: 300px;
+}
+
+.control-setting {
+    display: flex;
+    flex-direction: column; /* Stack label and input vertically */
+    width: 100%; /* Make the input stretch to match the container */
+}
+
+.control-setting p {
+    margin: 0 0 10px 0; /* Add some spacing below the label */
+    font-size: 16px; /* Adjust font size as needed */
+    font-weight: bold; /* Make the label bold (optional) */
+    color: #8ebbff; /* Set label color */
+}
+
+.control-setting input {
+    padding: 8px 10px; /* Add padding for the input field */
+    border: transparent solid 2px;
+    border-radius: 10px; /* Rounded corners */
+    font-size: 14px; /* Adjust font size */
+    width: 100%; /* Stretch input to full width */
+    box-sizing: border-box; /* Include padding in width calculation */
+    background-color: rgba(0, 0, 0, 0.2);
+    outline: none;
+    color: #8ebbff; /* Default text color */
+    transition: background-color 0.3s ease-in-out, border 0.3s ease;
+}
+
+.control-setting input::placeholder {
+    color: #8ebbff;
+    font-size: 16px;
+    transition: color 0.3s ease-in-out, font-size 0.3s ease;
+}
+
+.control-setting input:focus {
+    color: black; /* Text color on focus */
+    background-color: #f4f5fc; /* Optional: To emphasize focus state */
+}
+
+.control-setting input:focus::placeholder {
+    color: black; /* Placeholder color on focus */
+}
+
+.control-setting input:hover {
+    border: #8ebbff solid 2px;
+}
+
+/* Optional: Adjust the switch alignment */
+.router .switch {
+    margin-top: 10px; /* Add some spacing above the switch */
+    align-self: center; /* Center the switch (optional) */
+}
+
+.refrigerator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #3a415a;
+    width: max-content;
+    border-radius: 20px;
+}
+
+.refrigerator p {
+    font-size: 16px;
+    font-weight: bold;
+    color: #8ebbff;
+}
+
+.refrigerator-setting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.refrigerator-setting .slider-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    margin-top: 10px;
+}
+
+.refrigerator-setting .slider {
+    margin: 0;
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #ccc;
+    height: 10px;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.refrigerator-setting .slider:hover {
+    background: #bbb;
+}
+
+.refrigerator-setting .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #8ebbff;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.refrigerator-setting .slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #8ebbff;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.refrigerator-setting .slider-labels {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #fff;
+}
+
+.refrigerator-setting .slider-labels span {
+    width: 20px;
+    text-align: center;
+}
+
+
+.camera {
+    position: relative;
+    background-color: #3a415a;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.473);
+    height: 300px;
+    width: 450px;
+    cursor: pointer;
+}
+
+/* Grey overlay styling */
+.camera-screen {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 85%; /* Cover top 80% of the card */
+    background: rgba(128, 128, 128, 0.8); /* Grey overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1; /* Place overlay above the image */
+    border-radius: 20px;
+}
+
+/* Overlay content styling */
+.camera-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.camera-content img {
+    width: 50px; /* Adjust as necessary */
+    height: 50px; /* Adjust as necessary */
+    margin-bottom: 10px;
+}
+
+.camera-content p {
+    margin: 0;
+    text-align: center;
+    font-size: 14px; /* Adjust as necessary */
+    transition: font-size 0.3s ease-in-out; /* Smooth transition */
+    color:#c9c6c6
+}
+
+.camera-button {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between
+}
+
+.camera-button p{
+    font-size: 16px;
+    transition: font-size 0.3s ease-in-out;
+    font-weight: 500;
+    color: #88c0d0; /* Ensure text is visible */
+}
+
+.microwave {
+    background-color: #2c2f3f; /* Darker shade for better contrast */
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Enhanced shadow for depth */
+    width: 400px;
+    padding: 20px;
+    color: #e0e0e0; /* Slightly lighter for better readability */
+    font-family: "Arial", sans-serif;
+    align-items: center;
+}
+
+.microwave-knobs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Adds spacing between knobs */
+}
+
+.heat-knob p, 
+.timer-knob p {
+    position: relative;
+    align-self: center;
+    font-size: 18px; /* Slightly larger text for readability */
+    font-weight: bold;
+    text-align: center; /* Ensures text is centered */
+    margin-bottom: 10px; /* Remove default margin */
+}
+
+.heat-slider {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 12px; /* Slightly larger for better usability */
+    background: linear-gradient(to right, #2a9d8f 20%, #f4a261 60%, #e63946 100%);
+    outline: none;
+    border-radius: 12px; /* Smoother edges */
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background 0.3s ease-in-out; /* Smooth transition effect */
+}
+
+
+.heat-slider::-webkit-slider-thumb,
+.heat-slider::-moz-range-thumb {
+    width: 24px; /* Larger thumb for easier control */
+    height: 24px;
+    background: #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #2c2f3f; /* Matches the microwave background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Adds depth to the slider thumb */
+    transition: transform 0.2s ease-in-out; /* Smooth animation on interaction */
+}
+
+.heat-slider::-webkit-slider-thumb:hover,
+.heat-slider::-moz-range-thumb:hover {
+    transform: scale(1.2); /* Slightly enlarge on hover */
+}
+
+.heat-labels {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 12px;
+    gap: 10px;
+    color: #88c0d0; /* Subtle complementary color */
+    text-transform: uppercase;
+    font-weight: 600; /* Emphasize labels */
+}
+
+.timer-knob {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Spacing between text and inputs */
+}
+
+.timer-input-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between hour and minute inputs */
+}
+
+.hour-input,
+.minute-input {
+    width: 50px;
+    height: 35px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #88c0d0; /* Matches heat-labels color */
+    border-radius: 5px;
+    background-color: #3a415a;
+    color: #e0e0e0;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.hour-input:focus,
+.minute-input:focus {
+    border-color: #e63946; /* Highlight on focus */
+    box-shadow: 0 0 5px #e63946;
+}
+
+.air-conditioner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    background-color: #3a415a;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    color: #f4f5fc;
+    font-family: Arial, sans-serif;
+}
+
+.air-conditioner-temperature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.temperature-display {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.control-btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    background-color: #8ebbff;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.control-btn:hover {
+    background-color: #0056b3;
+}
+
+.air-conditioner-mode {
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mode-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.mode-btn.hot-mode {
+    background-color: #e63946;
+}
+
+.mode-btn.cold-mode {
+    background-color: #0056b3;
+}
+
+.mode-btn:hover {
+    opacity: 0.9;
+}
+
+.air-conditioner-fan {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.fan-speed-display {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.control-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #f4f5fc;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.temperature-controls,
+.fan-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+
+.air-conditioner-temperature,
+.air-conditioner-mode,
+.air-conditioner-fan {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+

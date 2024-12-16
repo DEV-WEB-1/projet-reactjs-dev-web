@@ -5,24 +5,20 @@ import Filter from '../../Components/filter/filter';
 import Rooms from '../../Components/RoomList/rooms';
 import Panel from '../../Components/panel/panel';
 import "./home.css";
-import userService from '../../services/UserServices';
-import houseService from '../../services/houseServices';
 
-
-function Home({ user, setUser, houses, setHouses, activeHouse, setActiveHouse }) {
+function Home({ user, houses, activeHouse, setActiveHouse, setRooms, isLoading, setIsLoading }) {
   const [filteredRooms, setFilteredRooms] = useState([]);
   const [generalRoom, setGeneralRoom] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-
+ 
   const fetchRooms = async () => {
     try {
-
       console.log('activeHouse:', activeHouse);
       const generalRoom = activeHouse.rooms.find(room => room.type === "general");
       setGeneralRoom(generalRoom);
       const roomsExcludingGeneral = activeHouse.rooms.filter(room => room.type !== "general");
       setFilteredRooms(roomsExcludingGeneral);
+      setRooms(roomsExcludingGeneral);
       console.log('Detailed Active House:', activeHouse);
     } catch (error) {
       console.error("Error fetching user houses:", error);

@@ -4,12 +4,12 @@ import Filter from '../filter/filter'; // Ensure this path is correct
 import { useState } from 'react';
 
 const roomImages = {
-  'livingroom': './image/livingroom.png',
-  'bedroom': './image/bedroom.jpg',
-  'kitchen': './image/kitchen.jpg',
-  'bathroom': './image/bathroom.jpg',
-  'garage': './image/garage.jpeg',
-  'garden': './image/garden.jpg',
+  'livingroom': '../image/livingroom.png',
+  'bedroom': '../image/bedroom.jpg',
+  'kitchen': '../image/kitchen.jpg',
+  'bathroom': '../image/bathroom.jpg',
+  'garage': '../image/garage.jpeg',
+  'garden': '../image/garden.jpg',
 };
 
 const roomNames = {
@@ -24,7 +24,6 @@ const roomNames = {
 function RoomInfo({ roomName, setRoomName, roomType, setRoomType }) {
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingType, setIsEditingType] = useState(false);
-
   const handleNameEdit = () => {
     setIsEditingName(true);
   };
@@ -78,13 +77,13 @@ function RoomInfo({ roomName, setRoomName, roomType, setRoomType }) {
             ) : (
               <>
                 <h2>{roomName}</h2>
-                <img src="./image/edit.svg" alt="edit" onClick={handleNameEdit} />
+                <img src="../image/edit.svg" alt="edit" onClick={handleNameEdit} />
               </>
             )}
           </div>
           <div className='room-type'>
             <p>{roomNames[roomType]}</p>
-            {!isEditingType && <img src="./image/edit.svg" alt="edit" onClick={handleTypeEdit} />}
+            {!isEditingType && <img src="../image/edit.svg" alt="edit" onClick={handleTypeEdit} />}
             {isEditingType && (
               <Filter selectedType={roomType} onFilterChange={handleFilterChange} autoFocus />
             )}
