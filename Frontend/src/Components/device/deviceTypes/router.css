@@ -1,0 +1,96 @@
+    /* Additional CSS for Router component */
+    .router {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 20px;
+        background-color: #3a415a;
+        border-radius: 20px;
+        width: 300px;
+    }
+
+    .control-setting {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .control-setting p {
+        margin: 0 0 10px 0;
+        font-size: 16px;
+        font-weight: bold;
+        color: #8ebbff;
+    }
+
+    .control-setting input {
+        padding: 8px 10px;
+        border: transparent solid 2px;
+        border-radius: 10px;
+        font-size: 14px;
+        width: 100%;
+        box-sizing: border-box;
+        background-color: rgba(0, 0, 0, 0.2);
+        outline: none;
+        color: #8ebbff;
+        transition: background-color 0.3s ease-in-out, border 0.3s ease;
+    }
+
+    .control-setting input::placeholder {
+        color: #8ebbff;
+        font-size: 16px;
+        transition: color 0.3s ease-in-out, font-size 0.3s ease;
+    }
+
+    .control-setting input:focus {
+        color: black;
+        background-color: #f4f5fc;
+    }
+
+    .control-setting input:focus::placeholder {
+        color: black;
+    }
+
+    .control-setting input:hover {
+        border: #8ebbff solid 2px;
+    }
+
+    .password-field {
+        display: flex;
+        align-items: center;
+    }
+
+    .password-field button {
+        margin-left: 10px;
+        padding: 8px 10px;
+        background-color: #8ebbff;
+        border: none;
+        border-radius: 10px;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .password-field button:hover {
+        background-color: #6b9bd8;
+    }
+
+    .confirm-button {
+        padding: 10px;
+        background-color: #8ebbff;
+        border: none;
+        border-radius: 20px;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .confirm-button:hover {
+        background-color: #6b9bd8;
+    }
+
+    .router .switch{
+        position: relative;
+        left: 200px;
+        top: 50px;
+    }

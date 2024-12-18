@@ -1,0 +1,14 @@
+.device {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+    width: max-content;
+    height: max-content;
+    background-color: #3a415a;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.473);
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+    padding: 0;
+}
+

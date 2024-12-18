@@ -1,0 +1,61 @@
+.heater {
+    background-color: #2e3b4e; /* Dark background for contrast */
+    border-radius: 15px;
+    padding: 20px;
+    color: #f0f0f0; /* Light text for readability */
+    font-family: "Arial", sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Adds depth */
+    width: 350px; /* Adjusted size */
+    margin: auto; /* Center the heater */
+    text-align: center; /* Align content centrally */
+}
+
+.heater h3 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #88c0d0; /* Accent color for the title */
+}
+
+.slider-container {
+    margin-bottom: 20px; /* Adds spacing below the slider */
+}
+
+.slider {
+    width: 100%; /* Full width slider */
+    height: 12px; /* Larger slider for better usability */
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none; /* Remove default styling for WebKit browsers */
+    appearance: none;
+    margin-bottom: 10px; /* Space between slider and labels */
+}
+
+.slider::-webkit-slider-thumb,
+.slider::-moz-range-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    border: 2px solid #2e3b4e;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.slider::-webkit-slider-thumb:hover,
+.slider::-moz-range-thumb:hover {
+    transform: scale(1.2); /* Slight zoom on hover */
+}
+
+.slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #88c0d0;
+    font-weight: bold;
+    text-transform: uppercase;
+}

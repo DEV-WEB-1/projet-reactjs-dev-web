@@ -1,0 +1,288 @@
+.room-info-container {
+    display: flex;
+    margin: 30px 10px;
+    position: relative; /* Ensure the card is positioned relative to position the title absolutely */
+}
+
+.room-info{
+    position: relative; /* Ensure the card is positioned relative to position the title absolutely */
+    display: flex;
+    flex-direction: row;
+    align-items:flex-end;
+    justify-content: center;
+    background-color: transparent;
+    border-radius: 20px;
+    gap: 20px;
+}
+
+.room-image > * {
+    position: relative; /* Ensure the card is positioned relative to position the title absolutely */
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    width: 150px; /* Width */
+    height: 200px; /* Height */
+    flex: 0 0 auto;
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+    overflow: hidden; /* Ensure the image covers the card */
+    display: flex;
+    align-items: flex-end; /* Align items to the bottom */
+    justify-content: center; /* Center the content */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.473);
+}
+
+/* Image styling */
+.room-image >* img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the image covers the entire card area */
+    border-radius: 20px; /* Match the card's border radius */
+}
+
+.room-title {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #f4f5fc;
+}
+
+.room-name {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    height: fit-content;
+    width: 100%;
+    gap: 5px;
+}
+
+.room-type {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    height: fit-content;
+    width: 100%;
+    gap: 5px;
+}
+
+.room-name h2 {
+    font-size: 26px;
+    transition: font-size 0.3s ease, opacity 0.3s ease; /* Add transition for opacity */
+    text-align: left;
+    margin: 0;
+}
+
+.room-name input {
+    font-size: 26px;
+    transition: font-size 0.3s ease, border 0.3s ease, background-color 0.3s ease, opacity 0.3s ease; /* Add transition for opacity */
+    text-align: left;
+    margin: 0;
+    border-radius: 17px;
+    padding: 5px;
+    background-color: #f4f5fc;
+    color: black;
+    opacity: 0;
+    animation: fadeIn 0.3s forwards; /* Add fade-in animation */
+}
+
+.room-type p {
+    display: flex;
+    align-self: flex-end;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    transition: font-size 0.3s ease, opacity 0.3s ease; /* Add transition for opacity */
+    text-align: left;
+    margin: 0;
+}
+
+.room-name img {
+    width: 20px;
+    height: 20px;
+    transition: width 0.3s ease, height 0.3s ease;
+    cursor: pointer;
+    opacity: 1; /* Ensure the image is visible */
+    transition: transform 0.3s ease;
+}
+
+.room-name img:hover {
+    transform: scale(1.1);
+}
+
+.room-type img {
+    width: 20px;
+    height: 20px;
+    transition: width 0.3s ease, height 0.3s ease;
+    cursor: pointer;
+    opacity: 1; /* Ensure the image is visible */
+    transition: transform 0.3s ease;
+}
+
+.room-type img:hover {
+    transform: scale(1.1);
+}
+
+.room-type .filter-wrapper {
+    margin: 0;
+    margin-left: 10px;
+    transition: width 0.3s ease; /* Add transition for width */
+}
+
+.room-type .filter {
+    height: 40px;
+    border-radius: 10px;
+    gap: 10px;
+    transition: height 0.3s ease, border-radius 0.3s ease, gap 0.3s ease;
+}
+
+.room-type .filter-content {
+    padding: 5px;
+   transition: padding 0.3s ease;
+}
+
+.room-type .filter-content svg {
+    width: 30px;
+    height: 30px;
+}
+
+.room-type .filter-content.selected {
+    align-self: center;
+    border-radius: 10px;
+    
+}
+
+@media screen and (max-width: 768px) {
+    .room-info-container {
+        margin: 40px 10px;
+        margin-bottom: 50px;
+    }
+
+    .room-info {
+        gap: 15px;
+    }
+
+    .room-image > * {
+        width: 125px;
+        height: 175px;
+        border-radius: 15px;
+    }
+
+    .room-title {
+        gap: 7px;
+    }
+
+    .room-name h2 {
+        font-size: 20px;
+    }
+
+    .room-name input {
+        font-size: 20px;
+    }
+
+    .room-type p {
+        font-size: 14px;
+    }
+
+    .room-name img {
+        width: 17px;
+        height: 17px;
+    }
+    
+    .room-type img {
+        width: 17px;
+        height: 17px;
+    }
+
+    .room-type .filter-wrapper {
+        width: fit-content;
+        margin-left: 5px; ;
+    }
+    .room-type .filter {
+        height: 35px;
+        border-radius: 10px;
+        gap: 10px;
+    }
+
+    .room-type .filter-content {
+        padding: 3px;
+    }
+
+    .room-type .filter-content svg {    
+        width: 25px;
+        height: 25px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .room-info-container {
+        margin: 50px 10px;
+        margin-top: 40px;
+    }
+
+    .room-info {
+        gap: 10px;
+    }
+
+
+    .room-image > * {
+        width: 125px;
+        height: 175px;
+        border-radius: 15px;
+    }
+
+    .room-title {
+        gap: 5px;
+    }
+
+    .room-name h2 {
+        font-size: 16px;
+    }
+
+    .room-name input {
+        font-size: 16px;
+    }
+
+    .room-type p {
+        font-size: 12px;
+    }
+
+    .room-name img {
+        width: 15px;
+        height: 15px;
+    }
+    
+    .room-type img {
+        width: 15px;
+        height: 15px;
+    }
+
+    .room-type .filter-wrapper {
+        width: fit-content;
+        margin-left: 5px;
+    }
+    .room-type .filter {
+        height: 30px;
+        width: fit-content;
+        border-radius: 10px;
+        gap: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .room-type .filter-content {
+        padding: 3px;
+    }
+
+    .room-type .filter-content svg {    
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
