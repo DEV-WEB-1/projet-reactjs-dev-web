@@ -81,3 +81,14 @@ exports.updateUser = async (email, updatedUserData) => {
   // Met à jour l'utilisateur correspondant à l'email
   return await User.findOneAndUpdate({ email }, updatedUserData, { new: true });
 };
+
+exports.getInvitedHouses = async (email) => {
+  // Find the user by email and return the houses they are invited to
+  const user = await User.findOne({ email }).populate("invited");
+
+  if (!user) {
+    throw new Error("User not found.");
+  }
+
+  return user.invited; // Assumes the `invited` field is populated with house data
+};

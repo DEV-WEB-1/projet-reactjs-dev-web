@@ -65,6 +65,9 @@ function App() {
         <Route path="/profile" element={<UserProfile 
         user={user}
         setUser={setUser}
+        houses={houses}
+        activeHouse={activeHouse}
+        setActiveHouse={setActiveHouse}
         />} />
         <Route path="/room/:roomName" 
           element={<Room 

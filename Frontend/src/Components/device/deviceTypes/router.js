@@ -58,7 +58,7 @@ function RouterDevice({ selectedDevice, setSelectedDevice }) {
                     <span className="switch-slider"></span>
                 </label>
             </div>
-            <button onClick={handleConfirm} className="confirm-button">
+            <button onClick={handleConfirm} className="router-button">
                 Confirm
             </button>
         </div>

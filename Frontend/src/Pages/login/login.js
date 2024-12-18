@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './style.css';
+import './login.css';
 import userService from '../../services/UserServices';
 
 function Login({ setUser }) {
@@ -56,14 +56,13 @@ function Login({ setUser }) {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
-      <div className="card p-4" style={{ width: '400px' }}>
+    <div className="login-container">
+      <div className="login-card">
         <div className="text-center mb-3">
           <img
-            src="/image/img1.jpg"
+            src="/image/profile.svg"
             alt="Login"
-            className="img-fluid rounded-circle"
-            style={{ width: '150px', height: '150px' }}
+            className="login-image"
           />
         </div>
         <h2 className="text-center">Login</h2>
@@ -92,7 +91,7 @@ function Login({ setUser }) {
             />
             {errors.password && <div className="invalid-feedback">{errors.password}</div>}
           </div>
-          <div className="d-flex justify-content-between mt-4">
+          <div className="button-container">
             <button type="submit" className="btn btn-primary">
               Login
             </button>
@@ -101,7 +100,7 @@ function Login({ setUser }) {
             </button>
           </div>
         </form>
-        <p className="mt-3 text-center">
+        <p className="text-center">
           <Link to="/forget-password">Forgot password?</Link>
         </p>
         <p className="text-center">

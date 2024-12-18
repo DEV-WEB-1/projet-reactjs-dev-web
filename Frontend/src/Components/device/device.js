@@ -13,7 +13,6 @@ import './device.css';
 function Device({ selectedDevice, setSelectedDevice }) {
     return (
         <div className="device">
-            <h1>{selectedDevice.name}</h1>
             {selectedDevice.type === "Light" && (
                 <LightDevice selectedDevice={selectedDevice} setSelectedDevice={setSelectedDevice} />
             )}

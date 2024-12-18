@@ -9,6 +9,8 @@ router.post("/check-email", userController.checkEmailValidity);
 router.patch("/update-password", userController.updatePassword);
 router.get("/getUserHouses", userController.getUserHouses);
 router.put("/updateUser", userController.updateUser);
+router.get("/invitedHouses/:email", userController.getInvitedHouses);
+router.put("/invite/:IvitedEmail", userController.invite);
 
 
 module.exports = router;

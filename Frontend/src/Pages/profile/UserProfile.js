@@ -1,29 +1,30 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import userService from "../../services/UserServices"; // Import du service utilisateur
+import userService from "../../services/UserServices";
+import "./UserProfile.css";
+import Header from "../../Components/header/header";
+import { useNavigate } from "react-router-dom";
 
-function UserProfile({ user, setUser}) {
-  const navigate = useNavigate();
-
-  // États pour les champs utilisateur
+function UserProfile({ user, setUser, houses, setActiveHouse, activeHouse }) {
   const [userDetails, setUserDetails] = useState({
     name: user.name,
     email: user.email,
     gender: user.gender,
-    image: user.image || "/image/default.jpg",
+    image: user.image || "../image/profile.svg",
     password: user.password,
+    admin : user.admin,
+    invited : user.invited
   });
 
-  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [showInviteInput, setShowInviteInput] = useState(false);
+  const [inviteEmail, setInviteEmail] = useState("");
 
-  // Gestion des champs utilisateur
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target; 
     setUserDetails((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Gestion de l'upload d'image
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -32,134 +33,101 @@ function UserProfile({ user, setUser}) {
     }
   };
 
-  // Soumission des changements
   const handleSubmit = async () => {
     setIsLoading(true);
-    setMessage("");
     try {
-      // Mettre à jour les informations utilisateur
-      const updatedUserData = { email: user.email, name: userDetails.name, gender: userDetails.gender };
-      const updatedUser = await userService.updateUser(updatedUserData);
-    
-      // Mettre à jour le mot de passe si nécessaire
-      if (userDetails.password.trim() !== "") {
-        await userService.updatePassword(user.email, userDetails.password);
-      }
-    
-      setMessage("Profil et mot de passe mis à jour avec succès !");
-      
-      // Mettre à jour l'objet 'user' dans le parent (App.js)
-      setUser(updatedUser);  // Mise à jour du user dans le parent
+      const updatedUser = await userService.updateUser(userDetails);
+      setUser(updatedUser);
     } catch (error) {
-      setMessage("Une erreur est survenue : " + error.message);
+      console.error("Error updating user:", error.message || "Unknown error");
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Retour à la page d'accueil
-  const goHome = () => {
-    navigate("/home");
+  const handleInviteClick = () => {
+    setShowInviteInput(!showInviteInput);
+  };
+
+  const handleInviteChange = (e) => {
+    setInviteEmail(e.target.value);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
+  const handleInviteSubmit = async () => {
+    if(!inviteEmail) return;
+    try{
+      const invitedHouses = await userService.getInvitedHouses(inviteEmail);
+      invitedHouses.push(activeHouse._id);
+      await userService.inviteUser(inviteEmail, {invited : invitedHouses});
+      setShowInviteInput(false);
+      setInviteEmail("");
+    } catch (error) {
+      console.error("Error inviting user:", error.message || "Unknown error");
+    }
   };
 
   return (
-    <div className="container mt-5">
-      <div className="card shadow p-4">
-        <h2 className="text-center mb-4">Profil</h2>
-
-        {/* Bouton retour à l'accueil */}
-        <button className="btn btn-secondary btn-sm px-2 py-1 mb-3" onClick={goHome}>
-         Retour à l'accueil
-        </button>
-
-
-        {/* Disposition horizontale de l'image et du nom */}
-        <div className="d-flex justify-content-center align-items-center mb-3">
-          <div className="mr-3">
-            <label htmlFor="uploadImage" className="btn btn-secondary btn-sm">
-              Modifier l'image
-            </label>
-            <input
-              type="file"
-              id="uploadImage"
-              accept="image/*"
-              style={{ display: "none" }}
-              onChange={handleImageChange}
-            />
+    <div className="user-profile-container">
+      <Header
+        sortedHouses={houses}
+        setActiveHouse={setActiveHouse}
+        activeHouse={activeHouse}
+        user={user}
+        setIsLoading={setIsLoading}
+      />
+      <div className="profile-content">
+        <h2>Profile</h2>
+        <div className="profile-picture">
+          <img src={userDetails.image} alt="Profile" className="profile-image" />
+          <div>
+            <label htmlFor="uploadImage" className="change-image-label">Change Image</label>
+            <input type="file" id="uploadImage" accept="image/*" style={{ display: "none" }} onChange={handleImageChange} />
           </div>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-          <img
-            src={userDetails.image}
-            alt="Profil"
-            className="rounded-circle"
-            style={{ width: "100px", height: "100px", objectFit: "cover" }}
-          />
+          <div className="logout-button">
+            <button onClick={handleLogout}>Logout</button>
+          </div>
         </div>
-
-        <div className="mb-3">
-          <label>Email :</label>
-          <input
-            type="email"
-            className="form-control"
-            name="email"
-            value={userDetails.email}
-            disabled
-          />
+        <div className="user-details">
+          <div>
+            <label>Email:</label>
+            <input type="email" name="email" value={userDetails.email} disabled />
+          </div>
+          <div>
+            <label>Name:</label>
+            <input type="text" name="name" value={userDetails.name} onChange={handleChange} />
+          </div>
+          <div>
+            <label>Gender:</label>
+            <select name="gender" value={userDetails.gender} onChange={handleChange}>
+              <option value="">Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <button className="invite-user-button" onClick={handleInviteClick}>Invite User</button>
+          {showInviteInput && (
+            <div className="invite-input">
+              <input
+                type="email"
+                placeholder="Enter email to invite"
+                value={inviteEmail}
+                onChange={handleInviteChange}
+              />
+              <button className="invite-button" onClick={handleInviteSubmit}>Send Invite</button>
+            </div>
+          )}
         </div>
-
-        {/* Champs modifiables */}
-        <div className="mb-3">
-          <label>Nom :</label>
-          <input
-            type="text"
-            className="form-control"
-            name="name"
-            value={userDetails.name}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="mb-3">
-          <label>Genre :</label>
-          <select
-            className="form-control"
-            name="gender"
-            value={userDetails.gender}
-            onChange={handleChange}
-          >
-            <option value="">Sélectionner</option>
-            <option value="Homme">Homme</option>
-            <option value="Femme">Femme</option>
-            <option value="Autre">Autre</option>
-          </select>
-        </div>
-
-        {/* Champ pour afficher et modifier le mot de passe */}
-        <div className="mb-3">
-          <label>Mot de passe :</label>
-          <input
-            type="password"
-            className="form-control"
-            name="password"
-            value={userDetails.password}
-            onChange={handleChange}
-          />
-        </div>
-
-        {/* Bouton de soumission */}
-        <div className="text-center">
-          <button className="btn btn-primary" onClick={handleSubmit} disabled={isLoading}>
-            {isLoading ? "Mise à jour..." : "Mettre à jour le profil"}
+        <div className="update-button">
+          <button onClick={handleSubmit} disabled={isLoading}>
+            {isLoading ? "Updating..." : "Update Profile"}
           </button>
         </div>
-
-        {/* Message de confirmation */}
-        {message && (
-          <div className="alert alert-success mt-3" role="alert">
-            {message}
-          </div>
-        )}
       </div>
     </div>
   );

@@ -94,6 +94,7 @@
     position: relative;
     width: 50px;
     height: 25px;
+    top: -10px;
 }
 
 .switch-label {

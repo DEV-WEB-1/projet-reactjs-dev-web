@@ -2,6 +2,7 @@ import './roomDevices.css'
 import { useEffect, useState } from 'react';
 import Device from '../device/device'; 
 import houseService from '../../services/houseServices';
+import AddDevice from '../addDevice/addDevice';
 
 function RoomDevices({devices, setDevices, activeHouse, setActiveHouse, Activeroom}) {
     const deviceData = [
@@ -30,10 +31,43 @@ function RoomDevices({devices, setDevices, activeHouse, setActiveHouse, Activero
 
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedDevice, setSelectedDevice] = useState(null); // For modal
+    const [addDevice, setAddDevice] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deviceToDelete, setDeviceToDelete] = useState(null);
+
+
+    console.log(devices);
 
     const filteredDevices = devices.filter(device =>
         device.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
+
+    const sortedDevices = [...filteredDevices].sort((a, b) => {
+        if (a.type < b.type) return -1;
+        if (a.type > b.type) return 1;
+        return 0;
+    });
+    
+    const handleDelete = async (deviceToDelete) => {
+        const updatedDevices = devices.filter(device => device.name !== deviceToDelete.name);
+        setDevices(updatedDevices);
+        Activeroom.devices = updatedDevices;
+    
+        const updatedRooms = activeHouse.rooms.map(room => 
+            room.name === Activeroom.name ? Activeroom : room
+        );
+        setActiveHouse({ ...activeHouse, rooms: updatedRooms });
+    
+        try {
+            await houseService.updateHouse({ rooms: updatedRooms });
+            console.log(`${deviceToDelete.name} deleted successfully.`);
+        } catch (error) {
+            console.error('Error deleting device:', error);
+        }
+    };
+    
+    
+    
 
     const closeModal = async () =>  {
         if (selectedDevice)
@@ -51,8 +85,12 @@ function RoomDevices({devices, setDevices, activeHouse, setActiveHouse, Activero
             } catch (error) {
                 console.error('Error updating house:', error);
             }
-        }    
-        setSelectedDevice(null);
+            setSelectedDevice(null);
+        }  
+        else if (addDevice) {
+            setAddDevice(false);
+        }
+        
     };
 
     return (
@@ -68,16 +106,33 @@ function RoomDevices({devices, setDevices, activeHouse, setActiveHouse, Activero
                 />
             </div>
             <div className="devices-list">
-                {filteredDevices.map((device) => (
-                    <div
-                        className="devices-item"
-                        key={device.name}
-                        onClick={() => setSelectedDevice(device)}
-                    >
-                        <img src={deviceData.find(d => d.name === device.type).img} alt="device" />
+                <div className="add-devices-item" onClick={() => setAddDevice(true)}>
+                    <div className='add-device-button'>
+                        <img src="../image/add.svg" alt="add" />
+                    </div>
+                </div>
+                {sortedDevices.map((device) => (
+                    <div className="devices-item" key={device.name}>
+                        {/* Delete Button */}
+                        <button
+                            className="delete-button"
+                            onClick={(e) => {
+                                e.stopPropagation(); // Prevent modal from opening
+                                setDeviceToDelete(device);
+                                setShowDeleteModal(true);
+                            }}
+                        >
+                            <img src="../image/remove.svg" alt="" />
+                        </button>
+
+                        {/* Device Image and Name */}
+                        <img src={deviceData.find((d) => d.name === device.type).img} alt="device" />
                         <p>{device.name}</p>
                     </div>
                 ))}
+
+
+
             </div>
 
             {/* Modal for showing the Device */}
@@ -88,6 +143,42 @@ function RoomDevices({devices, setDevices, activeHouse, setActiveHouse, Activero
                     </div>
                 </div>
             )}
+
+            {/* Modal for adding a new Device */}
+            {addDevice && (
+                <div className="modal-overlay" onClick={closeModal}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <AddDevice deviceData={deviceData} devices={devices} setDevices={setDevices} Activeroom={Activeroom} setActiveHouse={setActiveHouse} activeHouse={activeHouse}/>
+                    </div>
+                </div>
+            )}
+
+            {showDeleteModal && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <h3>Confirm Deletion</h3>
+                        <p>Are you sure you want to delete "{deviceToDelete?.name}"?</p>
+                        <div className="modal-buttons">
+                            <button 
+                                onClick={() => {
+                                    handleDelete(deviceToDelete);
+                                    setShowDeleteModal(false);
+                                }}
+                                className="confirm-button"
+                            >
+                                Yes, Delete
+                            </button>
+                            <button 
+                                onClick={() => setShowDeleteModal(false)}
+                                className="cancel-button"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 }

@@ -34,7 +34,7 @@ function AddRoom({ user, houses, activeHouse, setActiveHouse, setIsLoading}) {
       }else if (device === 'Air Conditioner'){ 
         deviceSettings.temperature = 20;
         deviceSettings.mode = "Cold";
-        deviceSettings.fanSpeed = 0;
+        deviceSettings.fanSpeed = 1;
       }else if (device === 'Electric Stove'){
         deviceSettings.topLeft = 0;
         deviceSettings.topRight = 0;

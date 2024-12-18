@@ -1,28 +1,25 @@
 /* Houses container */
 .houses-container {
     display: flex;
+    position: relative;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: calc(70% - 70px);
     border-radius: 20px;
-    height: auto; /* Let the height adjust to content */
-    margin: 100px auto; /* Center the container and add margin from top */
+    height: auto;
+    margin: 100px auto;
     padding: 20px;
-    align-self: center;
-    position: relative;
-    top: 150px;
+    top: 100px;
     background-color: #3a415a;
-    overflow-y: auto; /* Allow scrolling if necessary */
+    overflow-y: auto;
 }
 
-/* Heading styles */
 .houses-container h2 {
     color: white;
     margin-bottom: 30px;
 }
 
-/* Houses list container */
 .houses-list {
     display: flex;
     flex-wrap: wrap;
@@ -30,7 +27,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 1000px; /* Limit max width for a cleaner layout */
+    max-width: 1000px;
 }
 
 /* Add house button */
@@ -43,7 +40,7 @@
     background-color: #457b9d;
     border-radius: 50%;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for the button */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
 }
 
@@ -107,11 +104,10 @@
     z-index: 1000;
 }
 
-/* Modal buttons */
 .modal-buttons {
     display: flex;
     justify-content: space-around;
-    gap: 20px; /* Add space between buttons */
+    gap: 20px;
 }
 
 .modal-buttons button {
@@ -126,15 +122,13 @@
 }
 
 .modal-buttons button:hover {
-    background-color: #36627e; /* Darker shade for hover effect */
+    background-color: #36627e;
 }
-
 
 .new-house-info {
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
     background-color: #3a415a;
     border-radius: 20px;
     padding: 20px;
@@ -144,7 +138,7 @@
 .new-house-info h3 {
     color: white;
     margin-bottom: 20px;
-    font-size: 24px; /* Increased font size for better readability */
+    font-size: 24px;
 }
 
 .new-house-info input {
@@ -154,5 +148,65 @@
     border-radius: 5px;
     border: 1px solid #ccc;
     margin-bottom: 20px;
-    box-sizing: border-box; /* Ensure padding is included in width */
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .houses-container {
+        width: 90%;
+        margin: 50px auto;
+    }
+
+    .house {
+        width: 80px;
+    }
+
+    .house .home-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .house p {
+        font-size: 12px;
+    }
+
+    .add-house {
+        width: 50px;
+        height: 50px;
+    }
+
+    .add-house img {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .houses-container {
+        width: 100%;
+        margin: 20px auto;
+    }
+
+    .house {
+        width: 60px;
+    }
+
+    .house .home-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .house p {
+        font-size: 10px;
+    }
+
+    .add-house {
+        width: 40px;
+        height: 40px;
+    }
+
+    .add-house img {
+        width : 20px;
+        height: 20px;
+    }
 }

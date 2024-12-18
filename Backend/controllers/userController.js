@@ -100,4 +100,44 @@ exports.updateUser = async (req, res) => {
     res.status(500).json({ message: "Erreur lors de la mise à jour de l'utilisateur.", error });
   }
 };
+exports.invite = async (req, res) => {
+  try {
+    const email = req.params.IvitedEmail;
+    const updatedData = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: "L'email est requis pour la mise à jour." });
+    }
+
+    const updatedUser = await userService.updateUser(email, updatedData);
+    if (!updatedUser) {
+      return res.status(404).json({ message: "Utilisateur non trouvé." });
+    }
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ message: "Erreur lors de la mise à jour de l'utilisateur.", error });
+  }
+};
+
+
+exports.getInvitedHouses = async (req, res) => {
+  try {
+    const email = req.params.email;
+
+    if (!email) {
+      return res.status(400).json({ message: "Email is required." });
+    }
+
+    const invitedHouses = await userService.getInvitedHouses(email);
+
+    if (!invitedHouses ) {
+      return res.status(404).json({ message: "No invited houses found for this user." });
+    }
+
+    res.status(200).json(invitedHouses);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching invited houses.", error: error.message });
+  }
+};
 

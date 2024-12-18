@@ -1,14 +1,12 @@
 import "./header.css";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import houseService from "../../services/houseServices";
 
 function Header({ sortedHouses, setActiveHouse, activeHouse, user, setIsLoading }) {
     const [HomedropdownOpen, setHomeDropdownOpen] = useState(false);
     const [BelldropdownOpen, setBellDropdownOpen] = useState(false);
-    const navigate = useNavigate(); // Initialize the navigate function
-
-    console.log('sortedHouses:', sortedHouses);
+    const navigate = useNavigate();
 
     const toggleHomeDropdown = () => {
         setHomeDropdownOpen(!HomedropdownOpen);
@@ -26,16 +24,11 @@ function Header({ sortedHouses, setActiveHouse, activeHouse, user, setIsLoading 
 
     const handleHouseClick = async (house) => {
         setIsLoading(true);
-        console.log('Changing house...');
         const newHouse = await houseService.getHouse(house.id);
-        setActiveHouse(newHouse); // Update the active house state
+        setActiveHouse(newHouse);
         setHomeDropdownOpen(false);
         setIsLoading(false);
-        navigate('/home'); // Redirect to the home page
-    };
-    
-    const handleProfileClick = () => {
-        navigate('/profile', { state: { user } }); // Passer les données user en state
+        navigate('/home');
     };
 
     return (
@@ -46,7 +39,7 @@ function Header({ sortedHouses, setActiveHouse, activeHouse, user, setIsLoading 
             <div className="icons">
                 <div className="homes">
                     <img
-                        src="../image/home.svg"
+                        src="/image/home.svg"
                         alt="Home Icon"
                         onClick={toggleHomeDropdown}
                     />
@@ -56,8 +49,8 @@ function Header({ sortedHouses, setActiveHouse, activeHouse, user, setIsLoading 
                                 className={`home-option ${activeHouse && activeHouse._id === house.id ? "active" : ""}`} 
                                 key={index} 
                                 onClick={() => handleHouseClick(house)}>
-                                <img className="home-icon" src="../image/home2.svg" alt="" />
-                                <img className="type-icon" src={`../image/${user.admin.includes(house.id) ? 'admin' : 'invited'}.svg`} alt="" />
+                                <img className="home-icon" src="/image/home2.svg" alt="" />
+                                <img className="type-icon" src={`/image/${user.admin.includes(house.id) ? 'admin' : 'invited'}.svg`} alt="" />
                                 <p>{house.nom}</p>
                                 {activeHouse && activeHouse._id === house.id && <div className="indicator"></div>}
                             </div>
@@ -66,20 +59,16 @@ function Header({ sortedHouses, setActiveHouse, activeHouse, user, setIsLoading 
                 </div>
                 <div className="notifications">
                     <img 
-                        src="../image/notification.svg" 
+                        src="/image/notification.svg" 
                         alt="Notifications Icon" 
                         onClick={toggleBellDropdown}/>
                     <div className={`dropdown-notifications ${BelldropdownOpen ? "show" : ""}`}>
-                        <p onClick={handleProfileClick}>Profile</p>
-                        <p>Settings</p>
-                        <p>Logout</p>
                     </div>
                 </div>
-                
+                <img src="/image/profile.svg" alt="Profile" className="profile-icon" onClick={() => navigate('/profile')}/>
             </div>
         </header>
     );  
 }
 
 export default Header;
-

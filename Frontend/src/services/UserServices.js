@@ -135,6 +135,47 @@ const userService = {
       throw error;
     }
   },
+  inviteUser: async (email, updatedData) => {
+    try {
+      const response = await fetch(`/api/users/invite/${email}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData), // Include additional data in the body
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data; // Return the updated user data
+    } catch (error) {
+      console.error("Error inviting user:", error.message || "Unknown error");
+      throw error;
+    }
+  },
+  getInvitedHouses: async (email) => {
+    try {
+      const response = await fetch(`/api/users/invitedHouses/${email}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data; // Return the list of invited houses
+    } catch (error) {
+      console.error("Error fetching invited houses:", error.message || "Unknown error");
+      throw error;
+    }
+  },
 };
 
 export default userService;

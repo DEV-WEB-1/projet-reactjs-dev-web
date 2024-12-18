@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import userService from '../../services/UserServices';
+import './forgetPassword.css';
 
 function ForgetPassword() {
   const [email, setEmail] = useState('');
@@ -29,8 +29,7 @@ function ForgetPassword() {
     setIsLoading(true);
 
     try {
-
-      if(!isEmailValid) {
+      if (!isEmailValid) {
         // Vérifier si l'email existe
         const response = await userService.checkEmailValidity(email);
         if (response.valid) {
@@ -39,7 +38,7 @@ function ForgetPassword() {
           setError('');
         } else {
           console.log(response.message);
-          setError('L\'email n\'existe pas. Veuillez vérifier votre adresse email.');
+          setError("L'email n'existe pas. Veuillez vérifier votre adresse email.");
           setIsLoading(false);
           return;
         }
@@ -68,7 +67,7 @@ function ForgetPassword() {
           navigate('/');
         } else {
           console.log(updateResponse.message);
-          setError('Une erreur s\'est produite lors de la réinitialisation du mot de passe.');
+          setError("Une erreur s'est produite lors de la réinitialisation du mot de passe.");
         }
       }
     } catch (error) {
@@ -87,14 +86,14 @@ function ForgetPassword() {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
-      <div className="card p-4" style={{ maxWidth: '400px', width: '100%' }}>
+    <div className="forget-password-container">
+      <div className="forget-password-card">
         {/* Image en haut */}
         <div className="text-center mb-3">
           <img
-            src="/image/img2.jpg" alt="Reset Password"
-            className="img-fluid rounded-circle"
-            style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+            src="/image/img2.jpg"
+            alt="Reset Password"
+            className="forget-password-image"
           />
         </div>
 
@@ -128,7 +127,7 @@ function ForgetPassword() {
             </div>
           )}
 
-          <div className="d-flex justify-content-between mt-3">
+          <div className="button-container mt-3">
             <button type="submit" className="btn btn-warning" disabled={isLoading}>
               {isLoading ? 'Sending...' : 'Send Reset'}
             </button>

@@ -7,21 +7,20 @@ import "../home/home.css"
 
 function Houses({ user, setUser, houses, setHouses, setActiveHouse, isLoading, setIsLoading }) {
     const navigate = useNavigate();
-    const hasFetchedHouses = useRef(false); // Tracks if houses have been fetched
-    const [isModalOpen, setIsModalOpen] = useState(false); // Controls the modal visibility
-    const [newHouseName, setNewHouseName] = useState(''); // Stores the new house name
+    const hasFetchedHouses = useRef(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [newHouseName, setNewHouseName] = useState('');
 
     const fetchUserHouses = async () => {
         try {
-            setIsLoading(true)
-            console.log('Fetching user houses...');
+            setIsLoading(true);
             const userHouses = await userService.getUserHouses();
             const houses = [...userHouses.adminHouses, ...userHouses.invitedHouses];
             setHouses(houses);
         } catch (error) {
             console.error("Error fetching user houses:", error);
-        }finally{
-            setIsLoading(false)
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -39,29 +38,26 @@ function Houses({ user, setUser, houses, setHouses, setActiveHouse, isLoading, s
     };
 
     const handleAddHouseClick = () => {
-        setIsModalOpen(true); // Show the modal when 'Add House' is clicked
+        setIsModalOpen(true);
     };
 
     const handleConfirmAddHouse = async () => {
         if (newHouseName) {
             try {
-                setIsLoading(true)
-                console.log('Adding new house:', newHouseName);
+                setIsLoading(true);
                 const newHouse = await houseService.createHouse({ name: newHouseName });
-                console.log('New House:', newHouse);
-                const updatedHouses = [...houses, {id: newHouse._id, nom: newHouseName}]; // Update state with the newly added house
+                const updatedHouses = [...houses, { id: newHouse._id, nom: newHouseName }];
                 setHouses(updatedHouses);
                 setActiveHouse(newHouse);
-                const updatedUserData = await userService.updateUser({ admin: [...user.admin, newHouse._id] }); // Update user with new house data
+                const updatedUserData = await userService.updateUser({ admin: [...user.admin, newHouse._id] });
                 setUser(updatedUserData);
-                setIsModalOpen(false); // Close the modal
-                setNewHouseName(''); // Reset the input field
-                
+                setIsModalOpen(false);
+                setNewHouseName('');
                 navigate('/home');
             } catch (error) {
                 console.error("Error adding new house:", error);
-            }finally{
-                setIsLoading(false)
+            } finally {
+                setIsLoading(false);
             }
         } else {
             alert('Please enter a house name');
@@ -69,16 +65,16 @@ function Houses({ user, setUser, houses, setHouses, setActiveHouse, isLoading, s
     };
 
     const handleCancelAddHouse = () => {
-        setIsModalOpen(false); // Close the modal without saving
-        setNewHouseName(''); // Reset the input field
+        setIsModalOpen(false);
+        setNewHouseName('');
     };
 
     useEffect(() => {
         if (user && !hasFetchedHouses.current) {
             fetchUserHouses();
-            hasFetchedHouses.current = true; // Set to true to ensure it only runs once
+            hasFetchedHouses.current = true;
         }
-    }, [user, setHouses]); // Ensure `setHouses` is included in the dependency array for consistency
+    }, [user, setHouses]);
 
     return (
         <div className={`home-container ${isLoading ? 'loading' : ''}`}>
@@ -98,7 +94,6 @@ function Houses({ user, setUser, houses, setHouses, setActiveHouse, isLoading, s
                     ))}
                 </div>
 
-                {/* Modal for adding a new house */}
                 {isModalOpen && (
                     <div className="modal-overlay">
                         <div className="new-house-info">
@@ -113,7 +108,7 @@ function Houses({ user, setUser, houses, setHouses, setActiveHouse, isLoading, s
                                 <button onClick={handleConfirmAddHouse}>Confirm</button>
                                 <button onClick={handleCancelAddHouse}>Cancel</button>
                             </div>
-                        </div>                    
+                        </div>
                     </div>
                 )}
             </div>

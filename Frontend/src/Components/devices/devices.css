@@ -130,8 +130,8 @@
     animation: fadeIn 0.3s forwards;
 }
 
-.selected-icon p {
-    font-size: 12px;
+.devices-item .selected-icon p {
+    font-size: 14px;
     color: #3a415a;
 }
 

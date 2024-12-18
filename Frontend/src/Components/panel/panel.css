@@ -5,6 +5,8 @@
     margin: 10px;
     gap: 10px;
     height: 250px;
+    overflow: hidden; /* Hide the overflow text */
+    text-overflow: ellipsis; /* Show ellipsis (...) for overflow text */
 }
 
 .panel >* {
@@ -18,6 +20,13 @@
     border-radius: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.473);
     height: auto;
+    cursor: pointer;
+}
+
+.camera-panel .switch {
+    position: relative;
+    top: -5px;
+    left: 360px;
     cursor: pointer;
 }
 
@@ -168,6 +177,7 @@
     top: 0;
 }
 
+
 .any-icon {
     display: flex;
     align-items: center;
@@ -183,6 +193,8 @@
     font-weight: 500;
     color: #f4f5fc;
     margin-top: 10px;
+    overflow: hidden; /* Hide the overflow text */
+    text-overflow: ellipsis; /* Show ellipsis (...) for overflow text */
 }
 
 .any-value {

@@ -1,18 +1,23 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import userService from '../../services/UserServices'; // Import userService
+import './register.css';
 
 function Register() {
-  const [formData, setFormData] = useState({ fullName: '', email: '', password: '', gender: '', image: '' });
+  const [formData, setFormData] = useState({ fullName: '', email: '', password: '', gender: '', image: '../image/profile.svg' });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'image') {
-      setFormData({ ...formData, [name]: e.target.value });
-    } else {
-      setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setFormData({ ...formData, image: imageUrl });
     }
   };
 
@@ -35,19 +40,16 @@ function Register() {
     if (Object.keys(validationErrors).length === 0) {
       try {
         // Prepare the user data
-        const formData = {
-          name : fullName,
-          email : email,
-          password : password,
-          gender : gender
+        const userData = {
+          name: fullName,
+          email,
+          password,
+          gender,
+          image
         };
 
-        if (image !== '') {
-          formData.image = image;
-        }
-
         // Add user using userService
-        const response = await userService.addUser(formData);
+        const response = await userService.addUser(userData);
 
         if (response) {
           // Redirect to the login page after registration
@@ -61,16 +63,18 @@ function Register() {
   };
 
   const handleReset = () => {
-    setFormData({ fullName: '', email: '', password: '', gender: '', image: null });
+    setFormData({ fullName: '', email: '', password: '', gender: '', image: '../image/profile.svg' });
     setErrors({});
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
-      <div className="card p-4" style={{ maxWidth: '400px', width: '100%' }}>
+    <div className="register-container">
+      <div className="register-card">
         {/* Image en haut */}
         <div className="text-center mb-3">
-          <img src="/image/img1.jpg" alt="Register" className="img-fluid" style={{ width: '100px', height: '100px' }} />
+          <img src={formData.image} alt="Register" className="register-image" />
+          <label htmlFor="uploadImage" className="change-image-label">Change Image</label>
+          <input type="file" id="uploadImage" accept="image/*" style={{ display: "none" }} onChange={handleImageChange} />
         </div>
 
         <h2 className="text-center">Register</h2>
@@ -113,14 +117,8 @@ function Register() {
             {errors.gender && <div className="invalid-feedback">{errors.gender}</div>}
           </div>
 
-          {/* Champ Image (si nécessaire) */}
-          <div className="form-group">
-            <label>Profile Image</label>
-            <input type="text" name="image" className="form-control" onChange={handleChange} />
-          </div>
-
           {/* Boutons */}
-          <div className="d-flex justify-content-between mt-3">
+          <div className="button-container">
             <button type="submit" className="btn btn-success">Register</button>
             <button type="button" className="btn btn-secondary" onClick={handleReset}>Reset</button>
           </div>

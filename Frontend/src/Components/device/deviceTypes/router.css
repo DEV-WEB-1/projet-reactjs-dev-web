@@ -75,7 +75,7 @@
         background-color: #6b9bd8;
     }
 
-    .confirm-button {
+    .router-button {
         padding: 10px;
         background-color: #8ebbff;
         border: none;
@@ -85,7 +85,7 @@
         transition: background-color 0.3s ease-in-out;
     }
 
-    .confirm-button:hover {
+    .router-button:hover {
         background-color: #6b9bd8;
     }
 

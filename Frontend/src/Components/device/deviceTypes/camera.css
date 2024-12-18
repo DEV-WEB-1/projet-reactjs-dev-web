@@ -66,9 +66,9 @@
     color: #88c0d0; /* Ensure text is visible */
 }
 
-.switch {
-    display: inline-block;
+.camera-button .switch {
     position: relative;
+    top: -20px;
     width: 50px;
     height: 25px;
 }

@@ -74,12 +74,9 @@ function Panel({ settings, houseId }) {
     <div className="panel">
       <div className="camera-panel">
         <div className='grey-overlay'> 
-          <div className='overlay-content'> 
-            <img src='./image/cameraOff.svg' alt='Logo' /> 
-            <p>Camera Offline</p> 
-          </div> 
+        <img src="../image/cameraOn.jpg" alt="Camera On" className="camera-live" />
         </div>
-        <p>Camera 1</p>
+        <p>general-camera</p>
       </div>
 
       <div className="control-panel">
