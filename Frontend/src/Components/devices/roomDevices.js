@@ -1,8 +1,8 @@
-import './roomDevices.css'
-import { useEffect, useState } from 'react';
+import {useState } from 'react';
 import Device from '../device/device'; 
 import houseService from '../../services/houseServices';
 import AddDevice from '../addDevice/addDevice';
+import './roomDevices.css';
 
 function RoomDevices({devices, setDevices, activeHouse, setActiveHouse, Activeroom}) {
     const deviceData = [
