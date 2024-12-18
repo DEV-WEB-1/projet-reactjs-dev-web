@@ -1,0 +1,143 @@
+.light {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+}
+
+.light-panel {
+    margin: 20px;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+}
+
+.colors {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 20px;
+}
+
+.color {
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.color.selected {
+    box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.7);
+}
+
+.light-controls {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.slider {
+    position: relative;
+    margin-right: 20px;
+}
+
+.slider-input {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 250px;
+    height: 15px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    outline: none;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.slider-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 2px solid #3a415a;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.slider-input::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 2px solid #3a415a;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.slider-value {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #2b3043;
+    color: #8ebbff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.switch {
+    display: inline-block;
+    position: relative;
+    width: 50px;
+    height: 25px;
+}
+
+.switch-label {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    user-select: none;
+}
+
+.switch-checkbox {
+    display: none;
+}
+
+.switch-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 25px;
+    transition: 0.4s;
+}
+
+.switch-slider:before {
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 50%;
+    transform: translateY(50%);
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.switch-checkbox:checked + .switch-slider {
+    background-color: #8ebbff;
+}
+
+.switch-checkbox:checked + .switch-slider:before {
+    transform: translate(24px, 50%);
+}

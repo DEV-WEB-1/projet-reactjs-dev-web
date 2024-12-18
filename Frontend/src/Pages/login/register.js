@@ -3,12 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import userService from '../../services/UserServices'; // Import userService
 
 function Register() {
-  const [formData, setFormData] = useState({ fullName: '', email: '', password: '', gender: '', image: null });
+  const [formData, setFormData] = useState({ fullName: '', email: '', password: '', gender: '', image: '' });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value } = e.target;
     if (name === 'image') {
       setFormData({ ...formData, [name]: e.target.value });
     } else {
@@ -42,7 +42,7 @@ function Register() {
           gender : gender
         };
 
-        if (image !== null) {
+        if (image !== '') {
           formData.image = image;
         }
 

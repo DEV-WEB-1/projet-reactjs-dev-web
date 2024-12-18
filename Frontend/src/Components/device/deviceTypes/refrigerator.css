@@ -1,0 +1,83 @@
+.refrigerator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: #3a415a;
+    width: max-content;
+    border-radius: 20px;
+}
+
+.refrigerator p {
+    font-size: 16px;
+    font-weight: bold;
+    color: #8ebbff;
+}
+
+.refrigerator-setting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.refrigerator-setting .slider-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    margin-top: 10px;
+}
+
+.refrigerator-setting .slider {
+    margin: 0;
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #ccc;
+    height: 10px;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.refrigerator-setting .slider:hover {
+    background: #bbb;
+}
+
+.refrigerator-setting .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #8ebbff;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.refrigerator-setting .slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #8ebbff;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.refrigerator-setting .slider-labels {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #fff;
+}
+
+.refrigerator-setting .slider-labels span {
+    width: 20px;
+    text-align: center;
+}

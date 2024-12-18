@@ -8,8 +8,6 @@ function Header({ sortedHouses, setActiveHouse, activeHouse, user, setIsLoading 
     const [BelldropdownOpen, setBellDropdownOpen] = useState(false);
     const navigate = useNavigate(); // Initialize the navigate function
 
-    console.log('sortedHouses:', sortedHouses);
-
     const toggleHomeDropdown = () => {
         setHomeDropdownOpen(!HomedropdownOpen);
         if (BelldropdownOpen) {
@@ -71,7 +69,7 @@ function Header({ sortedHouses, setActiveHouse, activeHouse, user, setIsLoading 
                         <p>Settings</p>
                     </div>
                 </div>
-                <img src={user.image != null ? user.image : "../image/profile.svg"} alt="../image/profile.svg" className="profile-icon" 
+                <img src={user.image !== '' ? user.image : "../image/profile.svg"} alt="../image/profile.svg" className="profile-icon" 
                     onClick={() => navigate('/profile')}/>
             </div>
         </header>

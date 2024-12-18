@@ -1,20 +1,20 @@
 import './roomDevices.css'
 import { useEffect, useState } from 'react';
 import Device from '../device/device'; 
+import houseService from '../../services/houseServices';
 
-function RoomDevices({devices, setDevices}) {
+function RoomDevices({devices, setDevices, activeHouse, setActiveHouse, Activeroom}) {
     const deviceData = [
         { name: "Refrigerator", img: "../image/refrigerator.png" }, //done
         { name: "Microwave", img: "../image/microwave.png" },//done
         { name: "Oven", img: "../image/oven.png" }, //p
         { name: "Dishwasher", img: "../image/dishwasher.png" }, //p
         { name: "Washing Machine", img: "../image/washing_machine.png" }, //p
-        
         { name: "Air Conditioner", img: "../image/air_conditioner.png" }, //done
-        { name: "Heater", img: "../image/heater.png" }, //p
+        { name: "Heater", img: "../image/heater.png" }, //done
         { name: "Automatic Irrigation", img: "../image/irrigation.png" },
-        { name: "Electric Stove", img: "../image/electric_stove.png" }, //p
-        { name: "TV", img: "../image/tv.png" },
+        { name: "Electric Stove", img: "../image/electric_stove.png" }, //done
+        { name: "TV", img: "../image/tv.png" },//done
         { name: "Gas Detector", img: "../image/gas_detector.png" },
         { name: "Motion Detector", img: "../image/motion_detector.png" },
         { name: "Light", img: "../image/light.png" }, //done
@@ -35,7 +35,23 @@ function RoomDevices({devices, setDevices}) {
         device.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const closeModal = () => {
+    const closeModal = async () =>  {
+        if (selectedDevice)
+        {
+            console.log(selectedDevice)
+            const updatedDevices = devices.map(device => device.name === selectedDevice.name ? selectedDevice : device);
+            setDevices(updatedDevices);
+            Activeroom.devices = updatedDevices;
+
+            const updatedRooms = activeHouse.rooms.map(room => room.name === Activeroom.name ? Activeroom : room);
+            setActiveHouse({ ...activeHouse, rooms: updatedRooms });
+
+            try {
+                await houseService.updateHouse({ rooms: updatedRooms });
+            } catch (error) {
+                console.error('Error updating house:', error);
+            }
+        }    
         setSelectedDevice(null);
     };
 
@@ -68,7 +84,7 @@ function RoomDevices({devices, setDevices}) {
             {selectedDevice && (
                 <div className="modal-overlay" onClick={closeModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <Device selectedDevice={selectedDevice} />
+                        <Device selectedDevice={selectedDevice} setSelectedDevice={setSelectedDevice} />
                     </div>
                 </div>
             )}

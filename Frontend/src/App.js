@@ -31,6 +31,7 @@ function App() {
           setUser={setUser}
           setHouses={setHouses}
           setActiveHouse={setActiveHouse}
+          isLoading ={isLoading}
           setIsLoading={setIsLoading} />} />
         <Route
           path="/home"

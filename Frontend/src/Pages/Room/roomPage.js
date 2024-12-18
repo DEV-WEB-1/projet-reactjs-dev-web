@@ -49,6 +49,9 @@ function RoomPage({user, houses, activeHouse, setActiveHouse, rooms, setIsLoadin
             <Devices
                 devices={devices}
                 setDevices={setDevices}
+                activeHouse={activeHouse}
+                setActiveHouse={setActiveHouse}
+                Activeroom = {room}
             />
         </div>
     );

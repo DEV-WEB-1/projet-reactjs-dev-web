@@ -107,7 +107,7 @@
     text-overflow: ellipsis; /* Show ellipsis (...) for overflow text */
 }
 
-.devices-item img {
+.devices-item  img {
     width: 50px;
     height: 50px;
 }
@@ -135,9 +135,9 @@
     color: #3a415a;
 }
 
-.remove-icon img{
+.devices-item.selected .remove-icon img{
     position: absolute;
-    top: -5px;
+    top: -3px;
     left: 0; /* Position at the top left */
     width: 20px;
     height: 20px;

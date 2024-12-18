@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import userService from '../../services/UserServices';
 import houseService from '../../services/houseServices';
 import "./houses.css";
+import "../home/home.css"
 
-function Houses({ user, setUser, houses, setHouses, setActiveHouse, setIsLoading }) {
+function Houses({ user, setUser, houses, setHouses, setActiveHouse, isLoading, setIsLoading }) {
     const navigate = useNavigate();
     const hasFetchedHouses = useRef(false); // Tracks if houses have been fetched
     const [isModalOpen, setIsModalOpen] = useState(false); // Controls the modal visibility
@@ -12,18 +13,21 @@ function Houses({ user, setUser, houses, setHouses, setActiveHouse, setIsLoading
 
     const fetchUserHouses = async () => {
         try {
+            setIsLoading(true)
             console.log('Fetching user houses...');
             const userHouses = await userService.getUserHouses();
             const houses = [...userHouses.adminHouses, ...userHouses.invitedHouses];
             setHouses(houses);
         } catch (error) {
             console.error("Error fetching user houses:", error);
+        }finally{
+            setIsLoading(false)
         }
     };
 
     const handleHouseClick = async (house) => {
-        setIsLoading(true);
         try {
+            setIsLoading(true);
             const activeHouseDetail = await houseService.getHouse(house.id);
             setActiveHouse(activeHouseDetail);
             navigate('/home');
@@ -41,6 +45,7 @@ function Houses({ user, setUser, houses, setHouses, setActiveHouse, setIsLoading
     const handleConfirmAddHouse = async () => {
         if (newHouseName) {
             try {
+                setIsLoading(true)
                 console.log('Adding new house:', newHouseName);
                 const newHouse = await houseService.createHouse({ name: newHouseName });
                 console.log('New House:', newHouse);
@@ -51,9 +56,12 @@ function Houses({ user, setUser, houses, setHouses, setActiveHouse, setIsLoading
                 setUser(updatedUserData);
                 setIsModalOpen(false); // Close the modal
                 setNewHouseName(''); // Reset the input field
+                
                 navigate('/home');
             } catch (error) {
                 console.error("Error adding new house:", error);
+            }finally{
+                setIsLoading(false)
             }
         } else {
             alert('Please enter a house name');
@@ -67,47 +75,48 @@ function Houses({ user, setUser, houses, setHouses, setActiveHouse, setIsLoading
 
     useEffect(() => {
         if (user && !hasFetchedHouses.current) {
-            setIsLoading(true);
             fetchUserHouses();
             hasFetchedHouses.current = true; // Set to true to ensure it only runs once
-            setIsLoading(false);
         }
     }, [user, setHouses]); // Ensure `setHouses` is included in the dependency array for consistency
 
     return (
-        <div className='houses-container'>
-            <h2>Your houses</h2>
-            <div className='houses-list'>
-                <div className='add-house' onClick={handleAddHouseClick}>
-                    <img src="../image/add.svg" alt="Add House" />
-                </div>
-                {houses && houses.map((house) => (
-                    <div className='house' key={house.id} onClick={() => handleHouseClick(house)}>
-                        <img className="home-icon" src="../image/home2.svg" alt="" />
-                        <img className="type-icon" src={`../image/${user.admin.includes(house.id) ? 'admin' : 'invited'}.svg`} alt="" />
-                        <p>{house.nom}</p>
+        <div className={`home-container ${isLoading ? 'loading' : ''}`}>
+            {isLoading && <div className="loader"></div>}
+            <div className='houses-container'>
+                <h2>Your houses</h2>
+                <div className='houses-list'>
+                    <div className='add-house' onClick={handleAddHouseClick}>
+                        <img src="../image/add.svg" alt="Add House" />
                     </div>
-                ))}
-            </div>
-
-            {/* Modal for adding a new house */}
-            {isModalOpen && (
-                <div className="modal-overlay">
-                    <div className="new-house-info">
-                        <h3>Add a new House</h3>
-                        <input
-                            type="text"
-                            placeholder="House name"
-                            value={newHouseName}
-                            onChange={(e) => setNewHouseName(e.target.value)}
-                        />
-                        <div className="modal-buttons">
-                            <button onClick={handleConfirmAddHouse}>Confirm</button>
-                            <button onClick={handleCancelAddHouse}>Cancel</button>
+                    {houses && houses.map((house) => (
+                        <div className='house' key={house.id} onClick={() => handleHouseClick(house)}>
+                            <img className="home-icon" src="../image/home2.svg" alt="" />
+                            <img className="type-icon" src={`../image/${user.admin.includes(house.id) ? 'admin' : 'invited'}.svg`} alt="" />
+                            <p>{house.nom}</p>
                         </div>
-                    </div>                    
+                    ))}
                 </div>
-            )}
+
+                {/* Modal for adding a new house */}
+                {isModalOpen && (
+                    <div className="modal-overlay">
+                        <div className="new-house-info">
+                            <h3>Add a new House</h3>
+                            <input
+                                type="text"
+                                placeholder="House name"
+                                value={newHouseName}
+                                onChange={(e) => setNewHouseName(e.target.value)}
+                            />
+                            <div className="modal-buttons">
+                                <button onClick={handleConfirmAddHouse}>Confirm</button>
+                                <button onClick={handleCancelAddHouse}>Cancel</button>
+                            </div>
+                        </div>                    
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

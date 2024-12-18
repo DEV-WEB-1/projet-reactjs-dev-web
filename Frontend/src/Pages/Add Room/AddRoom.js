@@ -12,18 +12,45 @@ function AddRoom({ user, houses, activeHouse, setActiveHouse, setIsLoading}) {
   const [roomType, setRoomType] = useState('livingroom');
   const [selectedDevices, setSelectedDevices] = useState([]);
   const navigate = useNavigate();
-  console.log(activeHouse);
 
   const getDeviceWithNumber = (devices) => {
     const deviceCount = {};
     return devices.map((device) => {
       deviceCount[device] = (deviceCount[device] || 0) + 1;
+      const deviceSettings = {};
+      if (device === 'Light'){
+        deviceSettings.color = 'white';
+        deviceSettings.brightness = 0;
+      }else if (device === 'Router'){
+        deviceSettings.ssid = "router";
+        deviceSettings.password = "";
+      }else if (device === 'Refrigerator'){
+        deviceSettings.topLevel = 1;
+        deviceSettings.bottomLevel = 1;
+      }else if (device === 'Microwave'){
+        deviceSettings.heatLevel = 1;
+        deviceSettings.hour = 0;
+        deviceSettings.minute = 0;
+      }else if (device === 'Air Conditioner'){ 
+        deviceSettings.temperature = 20;
+        deviceSettings.mode = "Cold";
+        deviceSettings.fanSpeed = 0;
+      }else if (device === 'Electric Stove'){
+        deviceSettings.topLeft = 0;
+        deviceSettings.topRight = 0;
+        deviceSettings.bottomLeft = 0;
+        deviceSettings.bottomRight = 0;
+      }else if (device === 'Heater'){
+        deviceSettings.heatLevel = 1;
+      }else if (device === 'TV'){
+        deviceSettings.volume = 50;
+      }
       return {
         name: `${device} ${deviceCount[device]}`,
         type: device,
-        status: 'off',
+        status: 'Off',
         "room-name": roomName,
-        settings: {},
+        settings: deviceSettings,
       };
     });
   };
@@ -35,8 +62,9 @@ function AddRoom({ user, houses, activeHouse, setActiveHouse, setIsLoading}) {
       devices: getDeviceWithNumber(selectedDevices),
     };
 
+    console.log(newRoom);
+
     try {
-      console.log(activeHouse);
       // Ensure activeHouse is not null or undefined
       if (!activeHouse) {
         throw new Error('No active house selected.');

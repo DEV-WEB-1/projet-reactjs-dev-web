@@ -13,6 +13,7 @@ function Home({ user, houses, activeHouse, setActiveHouse, setRooms, isLoading, 
  
   const fetchRooms = async () => {
     try {
+      setIsLoading(true)
       console.log('activeHouse:', activeHouse);
       const generalRoom = activeHouse.rooms.find(room => room.type === "general");
       setGeneralRoom(generalRoom);
@@ -22,6 +23,8 @@ function Home({ user, houses, activeHouse, setActiveHouse, setRooms, isLoading, 
       console.log('Detailed Active House:', activeHouse);
     } catch (error) {
       console.error("Error fetching user houses:", error);
+    }finally{
+      setIsLoading(false)
     }
   };
 
