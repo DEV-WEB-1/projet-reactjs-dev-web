@@ -6,7 +6,7 @@ import Register from './Pages/login/register';
 import ForgetPassword from './Pages/login/forgetpass';
 import Home from './Pages/home/home';
 import AddRoom from './Pages/Add Room/AddRoom';
-import UserProfile from './Pages/login/UserProfile';
+import UserProfile from '../src/Pages/profile/UserProfile';
 import Houses from './Pages/houses/houses';
 import Room from './Pages/Room/roomPage';
 
@@ -62,7 +62,10 @@ function App() {
             />
           }
         />
-        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/profile" element={<UserProfile 
+        user={user}
+        setUser={setUser}
+        />} />
         <Route path="/room/:roomName" 
           element={<Room 
           user={user}

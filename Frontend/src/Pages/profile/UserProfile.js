@@ -59,7 +59,7 @@ function UserProfile({ user, setUser}) {
 
   // Retour à la page d'accueil
   const goHome = () => {
-    navigate("/houses");
+    navigate("/home");
   };
 
   return (
