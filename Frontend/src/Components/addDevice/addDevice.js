@@ -21,19 +21,45 @@ function AddDevice({ deviceData, devices, setDevices, Activeroom, setActiveHouse
 
         const nextNumber = deviceNumbers.length > 0 ? Math.max(...deviceNumbers) + 1 : 1;
 
+        console.log(devices);
+
         const newDevice = {
-            ...devices.find(d => d.type === selectedDevice.name),
+            type: selectedDevice.name,
+            room : Activeroom.name, 
             name: `${selectedDevice.name} ${nextNumber}`,
             status: 'Off',
             settings: {}
         };
 
+        console.log(newDevice);
+
         if (newDevice.type === "Light") {
             newDevice.settings.color = 'white';
             newDevice.settings.brightness = 50;
+        }else if (newDevice.type === "Heater") {
+            newDevice.settings.heatLevel = 1;
+        }else if (newDevice.type === 'Microwave') {
+            newDevice.settings.heatLevel = 1;
+        }else if (newDevice.type === 'Refrigerator') {
+            newDevice.settings.topLevel = 1;
+            newDevice.settings.bottomLevel = 1;
+        }else if (newDevice.type === 'TV') {
+            newDevice.settings.volume = 50;
+        }else if (newDevice.type === 'Air Conditioner') {
+            newDevice.settings.temperature = 20;
+            newDevice.settings.mode = "Cold";
+            newDevice.settings.fanSpeed = 1;
+        }else if (newDevice.type === 'Electric Stove') {
+            newDevice.settings.topLeft = 0;
+            newDevice.settings.topRight = 0;
+            newDevice.settings.bottomLeft = 0;
+            newDevice.settings.bottomRight = 0;
+        }else if (newDevice.type === 'Router') {
+            newDevice.settings.ssid = "router";
+            newDevice.settings.password = "";
         }
-
-        // Add other device types here...
+            
+        
 
         const updatedDevices = [...devices, newDevice];
         setDevices(updatedDevices);

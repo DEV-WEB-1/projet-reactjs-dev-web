@@ -112,7 +112,7 @@ function RoomDevices({devices, setDevices, activeHouse, setActiveHouse, Activero
                     </div>
                 </div>
                 {sortedDevices.map((device) => (
-                    <div className="devices-item" key={device.name}>
+                    <div className="devices-item" key={device.name} onClick={() => setSelectedDevice(device)}>
                         {/* Delete Button */}
                         <button
                             className="delete-button"
@@ -157,7 +157,7 @@ function RoomDevices({devices, setDevices, activeHouse, setActiveHouse, Activero
                 <div className="modal-overlay">
                     <div className="modal-content">
                         <h3>Confirm Deletion</h3>
-                        <p>Are you sure you want to delete "{deviceToDelete?.name}"?</p>
+                        <p className="modal-text">Are you sure you want to delete "{deviceToDelete?.name}"?</p>
                         <div className="modal-buttons">
                             <button 
                                 onClick={() => {

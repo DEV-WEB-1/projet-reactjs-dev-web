@@ -89,7 +89,7 @@ function Houses({ user, setUser, houses, setHouses, setActiveHouse, isLoading, s
                         <div className='house' key={house.id} onClick={() => handleHouseClick(house)}>
                             <img className="home-icon" src="../image/home2.svg" alt="" />
                             <img className="type-icon" src={`../image/${user.admin.includes(house.id) ? 'admin' : 'invited'}.svg`} alt="" />
-                            <p>{house.nom}</p>
+                            <p className="house-name">{house.nom}</p>
                         </div>
                     ))}
                 </div>
